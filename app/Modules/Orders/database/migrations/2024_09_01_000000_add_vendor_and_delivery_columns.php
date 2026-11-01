@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('order_items', function (Blueprint $table) {
-            // Snapshot of the offer's vendor (null = Technilium's own stock).
+            // Snapshot of the offer's vendor (null = TechniLium's own stock).
             // Groups lines into per-vendor sub-orders; no FK (cahier §9.1).
             $table->unsignedBigInteger('vendor_id')->nullable()->after('offer_id');
             $table->index('vendor_id');

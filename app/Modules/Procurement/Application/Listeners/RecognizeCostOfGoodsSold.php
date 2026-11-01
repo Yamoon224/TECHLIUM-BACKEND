@@ -13,7 +13,7 @@ use App\Modules\Shared\Events\StockConsumed;
 use Throwable;
 
 /**
- * When an order is delivered, its lines from Technilium's own stock leave
+ * When an order is delivered, its lines from TechniLium's own stock leave
  * inventory at their weighted-average cost: that is the cost of goods sold
  * (cahier §6.9 "valorisation du stock et coûts des marchandises vendues").
  * Third-party vendors' lines are not our stock and cost us nothing here.

@@ -69,7 +69,7 @@ final class PlaceOrderAction
 
             // Redeemed inside this transaction: if anything below fails the
             // coupon use rolls back with the order. The discount is borne by
-            // Technilium - sub-orders (and so vendor payouts) stay at list price.
+            // TechniLium - sub-orders (and so vendor payouts) stay at list price.
             $discount = 0;
             $appliedCode = null;
 
@@ -109,7 +109,7 @@ final class PlaceOrderAction
 
             $this->statusLog->record($order, OrderStatus::Pending->value);
 
-            // One sub-order per seller (vendor_id null = Technilium's own
+            // One sub-order per seller (vendor_id null = TechniLium's own
             // stock), each with its own status and delivery (cahier §3).
             $groups = [];
             foreach ($lines as $line) {

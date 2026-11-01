@@ -11,7 +11,7 @@ use App\Modules\Procurement\Infrastructure\Models\PurchaseOrder;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Drafts a purchase order. Only Technilium's own stock can be bought: an
+ * Drafts a purchase order. Only TechniLium's own stock can be bought: an
  * offer sold by a third-party vendor is that vendor's stock, not ours to buy
  * (cahier §3 - 1P vs 3P).
  */

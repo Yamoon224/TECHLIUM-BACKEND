@@ -34,7 +34,7 @@ interface OrderStatsInterface
     public function topProducts(DateTimeInterface $from, DateTimeInterface $to, int $limit): array;
 
     /**
-     * Revenue per seller in [from, to], by sub-order; vendor_id null = Technilium's own stock.
+     * Revenue per seller in [from, to], by sub-order; vendor_id null = TechniLium's own stock.
      *
      * @return list<array{vendor_id: int|null, orders: int, revenue: int}>
      */
@@ -42,9 +42,9 @@ interface OrderStatsInterface
 
     /**
      * Orders delivered in [from, to] that include at least one line of
-     * Technilium's own stock (vendor_id null), with those lines. The order's
+     * TechniLium's own stock (vendor_id null), with those lines. The order's
      * full list-price total and its coupon discount come along, because the
-     * discount is borne by Technilium and must be shared out by the caller.
+     * discount is borne by TechniLium and must be shared out by the caller.
      *
      * @return list<array{
      *     order_id: int, order_number: string, delivered_on: string,

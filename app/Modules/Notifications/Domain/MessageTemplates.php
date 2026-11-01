@@ -37,7 +37,7 @@ final class MessageTemplates
     {
         if ($locale === 'en') {
             $message = sprintf(
-                'Technilium: thank you %s, your order %s is placed (%s, cash on delivery).',
+                'TechniLium: thank you %s, your order %s is placed (%s, cash on delivery).',
                 self::firstName($customerName),
                 $orderNumber,
                 self::formatAmount($total, $currency),
@@ -49,7 +49,7 @@ final class MessageTemplates
         }
 
         $message = sprintf(
-            'Technilium : merci %s, votre commande %s est enregistrée (%s, paiement à la livraison).',
+            'TechniLium : merci %s, votre commande %s est enregistrée (%s, paiement à la livraison).',
             self::firstName($customerName),
             $orderNumber,
             self::formatAmount($total, $currency),
@@ -70,24 +70,24 @@ final class MessageTemplates
 
             return $wording === null
                 ? null
-                : sprintf('Technilium: %s, your order %s %s.', self::firstName($customerName), $orderNumber, $wording);
+                : sprintf('TechniLium: %s, your order %s %s.', self::firstName($customerName), $orderNumber, $wording);
         }
 
         $wording = self::STATUS_WORDING[$status] ?? null;
 
         return $wording === null
             ? null
-            : sprintf('Technilium : %s, votre commande %s %s.', self::firstName($customerName), $orderNumber, $wording);
+            : sprintf('TechniLium : %s, votre commande %s %s.', self::firstName($customerName), $orderNumber, $wording);
     }
 
     public static function returnRefunded(string $orderNumber, int $amount, string $currency, string $locale = 'fr'): string
     {
         if ($locale === 'en') {
-            return sprintf('Technilium: your return on order %s is refunded (%s).', $orderNumber, self::formatAmount($amount, $currency));
+            return sprintf('TechniLium: your return on order %s is refunded (%s).', $orderNumber, self::formatAmount($amount, $currency));
         }
 
         return sprintf(
-            'Technilium : votre retour sur la commande %s est remboursé (%s).',
+            'TechniLium : votre retour sur la commande %s est remboursé (%s).',
             $orderNumber,
             self::formatAmount($amount, $currency),
         );
@@ -108,7 +108,7 @@ final class MessageTemplates
                 return null;
             }
 
-            $message = sprintf('Technilium: your return request RMA-%06d (order %s) %s.', $returnId, $orderNumber, $wording);
+            $message = sprintf('TechniLium: your return request RMA-%06d (order %s) %s.', $returnId, $orderNumber, $wording);
             $note = trim((string) $note);
 
             return $note === '' ? $message : $message.' '.mb_strimwidth($note, 0, 120, '…');
@@ -125,7 +125,7 @@ final class MessageTemplates
             return null;
         }
 
-        $message = sprintf('Technilium : votre demande de retour RMA-%06d (commande %s) %s.', $returnId, $orderNumber, $wording);
+        $message = sprintf('TechniLium : votre demande de retour RMA-%06d (commande %s) %s.', $returnId, $orderNumber, $wording);
         $note = trim((string) $note);
 
         // SMS stays short: the full answer is in the customer's account.

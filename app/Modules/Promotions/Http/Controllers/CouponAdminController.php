@@ -36,7 +36,7 @@ class CouponAdminController extends Controller
 
     #[OA\Post(
         path: '/admin/coupons',
-        summary: 'Crée un code promotionnel (pourcentage ou montant fixe, à la charge de Technilium)',
+        summary: 'Crée un code promotionnel (pourcentage ou montant fixe, à la charge de TechniLium)',
         security: [['sanctum' => []]],
         tags: ['Promotions'],
         responses: [

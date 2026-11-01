@@ -18,9 +18,9 @@ class IdentitySeeder extends Seeder
         }
 
         $admin = User::query()->firstOrCreate(
-            ['email' => 'admin@technilium.app'],
+            ['email' => 'admin@TechniLium.app'],
             [
-                'name' => 'Admin Technilium',
+                'name' => 'Admin TechniLium',
                 'password' => 'password',
                 'email_verified_at' => now(),
             ],
@@ -32,9 +32,9 @@ class IdentitySeeder extends Seeder
 
         // The only account that manages access (feature switches, groups). Change its password at once.
         $super = User::query()->firstOrCreate(
-            ['email' => 'superadmin@technilium.app'],
+            ['email' => 'superadmin@TechniLium.app'],
             [
-                'name' => 'Super Admin Technilium',
+                'name' => 'Super Admin TechniLium',
                 'password' => 'password',
                 'email_verified_at' => now(),
             ],
@@ -44,7 +44,7 @@ class IdentitySeeder extends Seeder
             $super->assignRole(RoleEnum::SuperAdmin->value);
         }
 
-        // One demo account per remaining profile (<role>@technilium.app / password), to try each
+        // One demo account per remaining profile (<role>@TechniLium.app / password), to try each
         // backoffice view and the storefront. Existing accounts are left untouched (password included).
         foreach (RoleEnum::cases() as $role) {
             if (in_array($role, [RoleEnum::SuperAdmin, RoleEnum::Administrateur], true)) {
@@ -52,7 +52,7 @@ class IdentitySeeder extends Seeder
             }
 
             $user = User::query()->firstOrCreate(
-                ['email' => str_replace('_', '.', $role->value).'@technilium.app'],
+                ['email' => str_replace('_', '.', $role->value).'@TechniLium.app'],
                 [
                     'name' => $role->label().' (démo)',
                     'password' => 'password',

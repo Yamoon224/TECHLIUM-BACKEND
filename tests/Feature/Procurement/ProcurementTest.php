@@ -96,7 +96,7 @@ it('creates, updates, filters and deactivates suppliers', function () {
     $this->actingAs($buyer, 'sanctum')->getJson('/api/v1/admin/suppliers?q=import')->assertJsonCount(1, 'data');
 });
 
-it('only lets Technilium buy its own stock, from an active supplier, without duplicate lines', function () {
+it('only lets TechniLium buy its own stock, from an active supplier, without duplicate lines', function () {
     $buyer = buyerStaff();
     $supplier = Supplier::factory()->create();
     $vendorOffer = Offer::factory()->fromVendor(Vendor::factory()->active()->create()->id)->create();

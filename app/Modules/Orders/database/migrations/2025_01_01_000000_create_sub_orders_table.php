@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
 
-            // The seller of this share; null = Technilium's own stock (1P).
+            // The seller of this share; null = TechniLium's own stock (1P).
             // No FK: Vendors owns its table (cahier §9.1).
             $table->unsignedBigInteger('vendor_id')->nullable();
 

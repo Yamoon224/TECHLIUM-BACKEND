@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Technilium API",
-        "description": "API REST du backend Technilium - marketplace de produits technologiques et backoffice de gestion.\r\n\r\nAuthentification : jeton Bearer (Sanctum). Obtenez un jeton via les routes Auth, puis cliquez sur « Authorize ». Paiement à la livraison ; montants en F CFA.",
+        "title": "TechniLium API",
+        "description": "API REST du backend TechniLium - marketplace de produits technologiques et backoffice de gestion.\r\n\r\nAuthentification : jeton Bearer (Sanctum). Obtenez un jeton via les routes Auth, puis cliquez sur « Authorize ». Paiement à la livraison ; montants en F CFA.",
         "version": "1.0.0"
     },
     "servers": [
@@ -254,7 +254,7 @@
                 "tags": [
                     "Catalog Admin"
                 ],
-                "summary": "Crée un produit simple (une variante, une offre Technilium publiée)",
+                "summary": "Crée un produit simple (une variante, une offre TechniLium publiée)",
                 "operationId": "8a75c8d4c90a64a40ae0c2f18804cec3",
                 "responses": {
                     "201": {
@@ -336,7 +336,7 @@
                 "tags": [
                     "Catalog Admin"
                 ],
-                "summary": "Met à jour un produit et son offre Technilium",
+                "summary": "Met à jour un produit et son offre TechniLium",
                 "operationId": "cffd759b1d2a20ef49aa2419c741261f",
                 "responses": {
                     "200": {
@@ -1964,7 +1964,7 @@
                 "tags": [
                     "Procurement"
                 ],
-                "summary": "Crée un bon de commande (brouillon) sur du stock propre de Technilium",
+                "summary": "Crée un bon de commande (brouillon) sur du stock propre de TechniLium",
                 "operationId": "224639567ee334c7538ccdd6558b2da8",
                 "responses": {
                     "201": {
@@ -2232,7 +2232,7 @@
                 "tags": [
                     "Promotions"
                 ],
-                "summary": "Crée un code promotionnel (pourcentage ou montant fixe, à la charge de Technilium)",
+                "summary": "Crée un code promotionnel (pourcentage ou montant fixe, à la charge de TechniLium)",
                 "operationId": "5d4da630b55e6452b646bf226ef9edf3",
                 "responses": {
                     "201": {
@@ -2376,7 +2376,7 @@
                 "tags": [
                     "Reporting"
                 ],
-                "summary": "Chiffre d'affaires par vendeur (Technilium inclus) sur la période",
+                "summary": "Chiffre d'affaires par vendeur (TechniLium inclus) sur la période",
                 "operationId": "12b67566452d6ac409aee8ece5d943b9",
                 "responses": {
                     "200": {
@@ -2395,7 +2395,7 @@
                 "tags": [
                     "Reporting"
                 ],
-                "summary": "Marge brute de Technilium sur ses ventes en propre livrées (hors TVA, remises comprises, hors vendeurs tiers)",
+                "summary": "Marge brute de TechniLium sur ses ventes en propre livrées (hors TVA, remises comprises, hors vendeurs tiers)",
                 "operationId": "185dc6f648f9ebcf67b69d92456c8418",
                 "responses": {
                     "200": {

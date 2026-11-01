@@ -14,7 +14,7 @@ return new class extends Migration
 
             // No FK: the Vendors module owns the vendors table - cross-module
             // references stay application-level, never a SQL join (cahier §9.1).
-            // null => vente en propre (1P / Technilium).
+            // null => vente en propre (1P / TechniLium).
             $table->unsignedBigInteger('vendor_id')->nullable();
 
             $table->unsignedInteger('price_amount'); // smallest currency unit

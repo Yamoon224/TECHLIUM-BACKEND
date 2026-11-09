@@ -35,7 +35,11 @@ class BackofficeOrderController extends Controller
         summary: 'Liste des commandes pour le backoffice, filtrable par statut (cahier des charges §6.5)',
         security: [['sanctum' => []]],
         tags: ['Orders'],
-        parameters: [new OA\Parameter(name: 'status', in: 'query', required: false, schema: new OA\Schema(type: 'string'))],
+        parameters: [
+            new OA\Parameter(name: 'status', in: 'query', required: false, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'from', in: 'query', required: false, description: 'Date de début (YYYY-MM-DD)', schema: new OA\Schema(type: 'string', format: 'date')),
+            new OA\Parameter(name: 'to', in: 'query', required: false, description: 'Date de fin (YYYY-MM-DD)', schema: new OA\Schema(type: 'string', format: 'date')),
+        ],
         responses: [new OA\Response(response: 200, description: 'Commandes')],
     )]
     public function index(Request $request): AnonymousResourceCollection
@@ -49,6 +53,14 @@ class BackofficeOrderController extends Controller
             ->when(
                 $request->string('channel')->isNotEmpty(),
                 fn ($query) => $query->where('channel', $request->string('channel')->toString()),
+            )
+            ->when(
+                $request->date('from') !== null,
+                fn ($query) => $query->whereDate('created_at', '>=', $request->date('from')->toDateString()),
+            )
+            ->when(
+                $request->date('to') !== null,
+                fn ($query) => $query->whereDate('created_at', '<=', $request->date('to')->toDateString()),
             )
             ->orderByDesc('id')
             ->paginate(max(1, min($request->integer('per_page', 20), 100)));

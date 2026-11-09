@@ -221,3 +221,15 @@ it('still requires the three essentials', function () {
         $this->postJson('/api/v1/orders', $payload)->assertUnprocessable()->assertJsonValidationErrors($field);
     }
 });
+
+it('filters the backoffice order list by creation date', function () {
+    $staff = historyStaff();
+    $old = Order::factory()->create(['created_at' => '2025-01-10 10:00:00']);
+    $recent = Order::factory()->create(['created_at' => '2025-03-10 10:00:00']);
+
+    $numbers = fn (array $query) => collect($this->actingAs($staff, 'sanctum')->getJson('/api/v1/orders?'.http_build_query($query))->assertOk()->json('data'))->pluck('order_number')->all();
+
+    expect($numbers(['from' => '2025-02-01']))->toBe([$recent->order_number])
+        ->and($numbers(['to' => '2025-02-01']))->toBe([$old->order_number])
+        ->and($numbers(['from' => '2025-01-10', 'to' => '2025-03-10']))->toHaveCount(2);
+});

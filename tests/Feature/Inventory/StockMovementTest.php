@@ -176,3 +176,15 @@ it('records the stock taken out by an online order in the offer history', functi
         ->and($movement->quantity_after)->toBe(7)
         ->and($movement->reason)->toBe('Commande '.$order->json('order_number'));
 });
+
+it('filters the movement history by period', function () {
+    $offer = offerWithStock(10);
+    $old = StockMovement::factory()->create(['offer_id' => $offer->id, 'created_at' => '2025-01-10 10:00:00']);
+    $recent = StockMovement::factory()->create(['offer_id' => $offer->id, 'created_at' => '2025-03-10 10:00:00']);
+
+    $ids = fn (array $query) => collect($this->actingAs(stockManager(), 'sanctum')->getJson('/api/v1/admin/stock/movements?'.http_build_query(['offer_id' => $offer->id] + $query))->assertOk()->json('data'))->pluck('id')->all();
+
+    expect($ids(['from' => '2025-02-01']))->toBe([$recent->id])
+        ->and($ids(['to' => '2025-02-01']))->toBe([$old->id])
+        ->and($ids(['from' => '2025-01-10', 'to' => '2025-03-10']))->toHaveCount(2);
+});

@@ -30,7 +30,7 @@ class StockMovementController extends Controller
 
     #[OA\Get(
         path: '/admin/stock/movements',
-        summary: 'Historique des mouvements de stock, filtrable par offre',
+        summary: 'Historique des mouvements de stock, filtrable par offre et par période (from / to, YYYY-MM-DD)',
         security: [['sanctum' => []]],
         tags: ['Inventory'],
         responses: [new OA\Response(response: 200, description: 'Mouvements')],
@@ -43,6 +43,14 @@ class StockMovementController extends Controller
 
         if ($request->filled('offer_id')) {
             $query->where('offer_id', $request->integer('offer_id'));
+        }
+
+        if ($request->date('from') !== null) {
+            $query->whereDate('created_at', '>=', $request->date('from')->toDateString());
+        }
+
+        if ($request->date('to') !== null) {
+            $query->whereDate('created_at', '<=', $request->date('to')->toDateString());
         }
 
         return StockMovementResource::collection($query->paginate($perPage));

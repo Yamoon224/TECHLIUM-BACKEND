@@ -96,3 +96,11 @@ it('deletes a slide and its file', function () {
     expect(Banner::count())->toBe(0);
     Storage::disk('public')->assertMissing($banner->path);
 });
+
+it('accepts tall side banners and serves them by placement', function () {
+    addBanner(['placement' => 'left', 'image' => UploadedFile::fake()->image('side.png', 300, 900)])->assertCreated();
+    addBanner(['placement' => 'hero', 'image' => UploadedFile::fake()->image('tall.png', 300, 900)])->assertUnprocessable();
+
+    $this->getJson('/api/v1/catalog/banners?placement=left')->assertOk()->assertJsonCount(1);
+    $this->getJson('/api/v1/catalog/banners?placement=right')->assertOk()->assertJsonCount(0);
+});

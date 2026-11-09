@@ -20,10 +20,15 @@ class StoreBannerRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Side banners are tall and narrow; the others are wide bands.
+        $dimensions = in_array($this->input('placement'), Banner::SIDE_PLACEMENTS, true)
+            ? 'dimensions:min_width=100,min_height=300,max_width=6000,max_height=6000'
+            : 'dimensions:min_width=600,min_height=100,max_width=6000,max_height=6000';
+
         return [
             'placement' => ['required', Rule::in(Banner::PLACEMENTS)],
             // mimes checks the real content type; no SVG (script carrier).
-            'image' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:4096', 'dimensions:min_width=600,min_height=100,max_width=6000,max_height=6000'],
+            'image' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:4096', $dimensions],
             'title' => ['nullable', 'string', 'max:160'],
             // http(s) or a path of the store: never javascript: or data:.
             'link_url' => ['nullable', 'string', 'max:500', 'regex:#^(https?://|/)#i'],

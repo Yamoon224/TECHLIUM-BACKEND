@@ -20,7 +20,10 @@ use Illuminate\Support\Facades\Storage;
  */
 class Banner extends Model
 {
-    public const PLACEMENTS = ['hero', 'footer'];
+    public const PLACEMENTS = ['hero', 'footer', 'left', 'right'];
+
+    /** Vertical banners shown in the side margins of wide screens. */
+    public const SIDE_PLACEMENTS = ['left', 'right'];
 
     public const MAX_PER_PLACEMENT = 10;
 

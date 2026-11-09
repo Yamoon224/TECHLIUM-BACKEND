@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->string('placement', 16); // hero (top of the home page) or footer (above the footer)
+            $table->string('placement', 16); // hero (top of the home page), footer (above the footer), left / right (side margins of wide screens)
             $table->string('path'); // on the public disk
             $table->string('title')->nullable(); // alt text
             $table->string('link_url')->nullable();

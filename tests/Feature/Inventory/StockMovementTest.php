@@ -158,3 +158,21 @@ it('keeps the movement history of one offer', function () {
     $this->actingAs($staff, 'sanctum')->getJson('/api/v1/admin/stock/movements?offer_id='.$offer->id)
         ->assertOk()->assertJsonCount(1, 'data')->assertJsonPath('data.0.quantity_after', 15);
 });
+
+it('records the stock taken out by an online order in the offer history', function () {
+    $offer = offerWithStock(10);
+
+    $order = $this->postJson('/api/v1/orders', [
+        'customer_name' => 'Awa Traoré',
+        'customer_phone' => '+2250700000000',
+        'delivery_address' => 'Cocody',
+        'items' => [['offer_id' => $offer->id, 'quantity' => 3]],
+    ])->assertCreated();
+
+    expect($offer->fresh()->stock_quantity)->toBe(7);
+
+    $movement = StockMovement::query()->where('offer_id', $offer->id)->sole();
+    expect($movement->quantity_delta)->toBe(-3)
+        ->and($movement->quantity_after)->toBe(7)
+        ->and($movement->reason)->toBe('Commande '.$order->json('order_number'));
+});

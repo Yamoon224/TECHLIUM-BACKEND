@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Modules\Inventory;
 
 use App\Modules\Inventory\Application\Dashboard\StockSection;
+use App\Modules\Inventory\Application\Listeners\RecordSoldStock;
 use App\Modules\Inventory\Application\Listeners\RestockReturnedItems;
 use App\Modules\Shared\Dashboard\DashboardSection;
 use App\Modules\Inventory\Application\Listeners\StockPurchasedGoods;
 use App\Modules\Shared\Events\PurchaseReceived;
 use App\Modules\Shared\Events\ReturnReceived;
+use App\Modules\Shared\Events\StockSold;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,5 +28,6 @@ class InventoryModuleServiceProvider extends ServiceProvider
 
         Event::listen(ReturnReceived::class, RestockReturnedItems::class);
         Event::listen(PurchaseReceived::class, StockPurchasedGoods::class);
+        Event::listen(StockSold::class, RecordSoldStock::class);
     }
 }

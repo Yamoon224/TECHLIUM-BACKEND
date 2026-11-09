@@ -16,6 +16,7 @@ use App\Modules\Orders\Domain\OrderStatus;
 use App\Modules\Orders\Infrastructure\Models\Order;
 use App\Modules\Promotions\Application\Contracts\CouponGatewayInterface;
 use App\Modules\Shared\Events\OrderPlaced;
+use App\Modules\Shared\Events\StockSold;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -136,6 +137,14 @@ final class PlaceOrderAction
                     throw OfferUnavailableException::insufficientStock($line['offer_id']);
                 }
             }
+
+            // The stock is out: Inventory records it in each product's movement history.
+            event(new StockSold(
+                $order->order_number,
+                $channel,
+                $soldBy,
+                array_map(fn (array $line) => ['offer_id' => $line['offer_id'], 'quantity' => $line['quantity']], $lines),
+            ));
 
             // Raised inside the transaction: a rolled-back order sends nothing. A counter sale
             // texts nobody: the customer is standing at the till and has no delivery code to use.

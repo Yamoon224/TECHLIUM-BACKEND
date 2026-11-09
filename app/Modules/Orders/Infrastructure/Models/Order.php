@@ -35,6 +35,8 @@ use Illuminate\Support\Carbon;
  * @property string|null $coupon_code
  * @property string $channel
  * @property int|null $sold_by
+ * @property string|null $courier_name
+ * @property string|null $courier_phone
  * @property Carbon|null $created_at
  * @property-read Collection<int, OrderItem> $items
  * @property-read Collection<int, SubOrder> $subOrders
@@ -64,6 +66,8 @@ class Order extends Model
         'coupon_code',
         'channel',
         'sold_by',
+        'courier_name',
+        'courier_phone',
     ];
 
     protected function casts(): array

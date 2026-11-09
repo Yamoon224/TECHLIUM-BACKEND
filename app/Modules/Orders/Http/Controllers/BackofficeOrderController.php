@@ -7,6 +7,7 @@ namespace App\Modules\Orders\Http\Controllers;
 use App\Modules\Orders\Application\Actions\TransitionOrderStatusAction;
 use App\Modules\Orders\Application\Actions\TransitionSubOrderAction;
 use App\Modules\Orders\Domain\Exceptions\InvalidOrderTransitionException;
+use App\Modules\Orders\Domain\OrderStatus;
 use App\Modules\Orders\Http\Requests\TransitionOrderStatusRequest;
 use App\Modules\Orders\Http\Resources\OrderResource;
 use App\Modules\Orders\Infrastructure\Models\Order;
@@ -63,7 +64,11 @@ class BackofficeOrderController extends Controller
         parameters: [new OA\Parameter(name: 'orderNumber', in: 'path', required: true, schema: new OA\Schema(type: 'string'))],
         requestBody: new OA\RequestBody(required: true, content: new OA\JsonContent(
             required: ['status'],
-            properties: [new OA\Property(property: 'status', type: 'string', example: 'confirmed')],
+            properties: [
+                new OA\Property(property: 'status', type: 'string', example: 'confirmed'),
+                new OA\Property(property: 'courier_name', type: 'string', nullable: true),
+                new OA\Property(property: 'courier_phone', type: 'string', nullable: true),
+            ],
         )),
         responses: [
             new OA\Response(response: 200, description: 'Statut mis à jour'),
@@ -77,6 +82,13 @@ class BackofficeOrderController extends Controller
 
         try {
             $order = $this->transitionStatus->execute($order, $request->targetStatus());
+
+            if ($request->targetStatus() === OrderStatus::Shipped && $request->filled('courier_name')) {
+                $order->update([
+                    'courier_name' => $request->string('courier_name')->trim()->toString(),
+                    'courier_phone' => $request->string('courier_phone')->trim()->toString(),
+                ]);
+            }
         } catch (InvalidOrderTransitionException $exception) {
             abort(422, $exception->getMessage());
         }

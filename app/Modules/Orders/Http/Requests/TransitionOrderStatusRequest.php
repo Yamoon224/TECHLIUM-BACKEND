@@ -22,6 +22,9 @@ class TransitionOrderStatusRequest extends FormRequest
     {
         return [
             'status' => ['required', new Enum(OrderStatus::class)],
+            // Who carries the parcel (the backoffice requires it when shipping a whole order).
+            'courier_name' => ['nullable', 'string', 'max:255'],
+            'courier_phone' => ['nullable', 'string', 'max:50'],
         ];
     }
 

@@ -1,13 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-<<<<<<< HEAD
         "title": "TechLium API",
         "description": "API REST du backend TechLium - marketplace de produits technologiques et backoffice de gestion.\r\n\r\nAuthentification : jeton Bearer (Sanctum). Obtenez un jeton via les routes Auth, puis cliquez sur « Authorize ». Paiement à la livraison ; montants en F CFA.",
-=======
-        "title": "TechniLium API",
-        "description": "API REST du backend TechniLium - marketplace de produits technologiques et backoffice de gestion.\r\n\r\nAuthentification : jeton Bearer (Sanctum). Obtenez un jeton via les routes Auth, puis cliquez sur « Authorize ». Paiement à la livraison ; montants en F CFA.",
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
         "version": "1.0.0"
     },
     "servers": [
@@ -259,11 +254,7 @@
                 "tags": [
                     "Catalog Admin"
                 ],
-<<<<<<< HEAD
                 "summary": "Crée un produit simple (une variante, une offre TechLium publiée)",
-=======
-                "summary": "Crée un produit simple (une variante, une offre TechniLium publiée)",
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
                 "operationId": "8a75c8d4c90a64a40ae0c2f18804cec3",
                 "responses": {
                     "201": {
@@ -345,11 +336,7 @@
                 "tags": [
                     "Catalog Admin"
                 ],
-<<<<<<< HEAD
                 "summary": "Met à jour un produit et son offre TechLium",
-=======
-                "summary": "Met à jour un produit et son offre TechniLium",
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
                 "operationId": "cffd759b1d2a20ef49aa2419c741261f",
                 "responses": {
                     "200": {
@@ -1977,11 +1964,7 @@
                 "tags": [
                     "Procurement"
                 ],
-<<<<<<< HEAD
                 "summary": "Crée un bon de commande (brouillon) sur du stock propre de TechLium",
-=======
-                "summary": "Crée un bon de commande (brouillon) sur du stock propre de TechniLium",
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
                 "operationId": "224639567ee334c7538ccdd6558b2da8",
                 "responses": {
                     "201": {
@@ -2249,11 +2232,7 @@
                 "tags": [
                     "Promotions"
                 ],
-<<<<<<< HEAD
                 "summary": "Crée un code promotionnel (pourcentage ou montant fixe, à la charge de TechLium)",
-=======
-                "summary": "Crée un code promotionnel (pourcentage ou montant fixe, à la charge de TechniLium)",
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
                 "operationId": "5d4da630b55e6452b646bf226ef9edf3",
                 "responses": {
                     "201": {
@@ -2397,11 +2376,7 @@
                 "tags": [
                     "Reporting"
                 ],
-<<<<<<< HEAD
                 "summary": "Chiffre d'affaires par vendeur (TechLium inclus) sur la période",
-=======
-                "summary": "Chiffre d'affaires par vendeur (TechniLium inclus) sur la période",
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
                 "operationId": "12b67566452d6ac409aee8ece5d943b9",
                 "responses": {
                     "200": {
@@ -2420,11 +2395,7 @@
                 "tags": [
                     "Reporting"
                 ],
-<<<<<<< HEAD
                 "summary": "Marge brute de TechLium sur ses ventes en propre livrées (hors TVA, remises comprises, hors vendeurs tiers)",
-=======
-                "summary": "Marge brute de TechniLium sur ses ventes en propre livrées (hors TVA, remises comprises, hors vendeurs tiers)",
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
                 "operationId": "185dc6f648f9ebcf67b69d92456c8418",
                 "responses": {
                     "200": {

@@ -45,11 +45,7 @@ function html(Invoice $invoice): string
     return preg_replace('~data:image/png;base64,[A-Za-z0-9+/=]+~', '', app(RenderInvoiceDocument::class)->html($invoice));
 }
 
-<<<<<<< HEAD
 it('prints the TechLium logo on the document', function () {
-=======
-it('prints the TechniLium logo on the document', function () {
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
     expect(app(RenderInvoiceDocument::class)->html(issuedInvoice()))->toContain('<img src="data:image/png;base64,');
 });
 
@@ -141,21 +137,12 @@ it('still produces a PDF for a name with accents, quotes and symbols', function 
 
 it('prints the issuer from configuration, and the legal line only when it is set', function () {
     config(['invoicing.company' => [
-<<<<<<< HEAD
         'name' => 'TechLium SARL', 'address' => 'Abidjan, Cocody', 'phone' => '+225 07 00 00 00 00',
         'email' => 'facturation@TechLium.example', 'legal' => 'RCCM CI-ABJ-2026-B-00000 - NCC 0000000A',
     ]]);
 
     $page = html(issuedInvoice());
     expect($page)->toContain('TechLium SARL')->toContain('Abidjan, Cocody')->toContain('RCCM CI-ABJ-2026-B-00000');
-=======
-        'name' => 'TechniLium SARL', 'address' => 'Abidjan, Cocody', 'phone' => '+225 07 00 00 00 00',
-        'email' => 'facturation@TechniLium.example', 'legal' => 'RCCM CI-ABJ-2026-B-00000 - NCC 0000000A',
-    ]]);
-
-    $page = html(issuedInvoice());
-    expect($page)->toContain('TechniLium SARL')->toContain('Abidjan, Cocody')->toContain('RCCM CI-ABJ-2026-B-00000');
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
 
     config(['invoicing.company.legal' => '', 'invoicing.company.address' => '']);
     $bare = html(issuedInvoice(['number' => 'FAC-2026-000050']));

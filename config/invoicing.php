@@ -17,11 +17,7 @@ return [
     // Deliberately empty by default: legal identifiers (RCCM, numéro de compte
     // contribuable, capital...) are the company's to supply, never invented here.
     'company' => [
-<<<<<<< HEAD
         'name' => env('INVOICING_COMPANY_NAME', 'TechLium'),
-=======
-        'name' => env('INVOICING_COMPANY_NAME', 'TechniLium'),
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
         'address' => env('INVOICING_COMPANY_ADDRESS', ''),
         'phone' => env('INVOICING_COMPANY_PHONE', ''),
         'email' => env('INVOICING_COMPANY_EMAIL', ''),

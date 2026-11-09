@@ -61,11 +61,7 @@ class Offer extends Model
         return $this->belongsTo(ProductVariant::class, 'product_variant_id');
     }
 
-<<<<<<< HEAD
     public function isSoldByTechLium(): bool
-=======
-    public function isSoldByTechniLium(): bool
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
     {
         return $this->vendor_id === null;
     }

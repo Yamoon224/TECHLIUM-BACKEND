@@ -62,11 +62,7 @@ it('summarises the catalogue', function () {
     expect($rows)->toHaveCount(2)
         ->and($rows[0][1])->toBe('Vendeur #7')
         ->and($rows[0][2])->toBe(90000)
-<<<<<<< HEAD
         ->and($rows[1][1])->toBe('TechLium');
-=======
-        ->and($rows[1][1])->toBe('TechniLium');
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
 });
 
 it('is robust on an empty database', function () {

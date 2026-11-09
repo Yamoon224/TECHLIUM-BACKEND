@@ -11,11 +11,7 @@ use App\Modules\Procurement\Infrastructure\Models\PurchaseOrder;
 use Illuminate\Support\Facades\DB;
 
 /**
-<<<<<<< HEAD
  * Drafts a purchase order. Only TechLium's own stock can be bought: an
-=======
- * Drafts a purchase order. Only TechniLium's own stock can be bought: an
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
  * offer sold by a third-party vendor is that vendor's stock, not ours to buy
  * (cahier §3 - 1P vs 3P).
  */

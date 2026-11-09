@@ -10,11 +10,7 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-<<<<<<< HEAD
                 'title' => 'TechLium API',
-=======
-                'title' => 'TechniLium API',
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
             ],
 
             'routes' => [

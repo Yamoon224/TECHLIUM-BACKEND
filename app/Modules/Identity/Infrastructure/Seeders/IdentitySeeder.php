@@ -18,15 +18,9 @@ class IdentitySeeder extends Seeder
         }
 
         $admin = User::query()->firstOrCreate(
-<<<<<<< HEAD
             ['email' => 'admin@TechLium.app'],
             [
                 'name' => 'Admin TechLium',
-=======
-            ['email' => 'admin@TechniLium.app'],
-            [
-                'name' => 'Admin TechniLium',
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
                 'password' => 'password',
                 'email_verified_at' => now(),
             ],
@@ -38,15 +32,9 @@ class IdentitySeeder extends Seeder
 
         // The only account that manages access (feature switches, groups). Change its password at once.
         $super = User::query()->firstOrCreate(
-<<<<<<< HEAD
             ['email' => 'superadmin@TechLium.app'],
             [
                 'name' => 'Super Admin TechLium',
-=======
-            ['email' => 'superadmin@TechniLium.app'],
-            [
-                'name' => 'Super Admin TechniLium',
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
                 'password' => 'password',
                 'email_verified_at' => now(),
             ],
@@ -56,11 +44,7 @@ class IdentitySeeder extends Seeder
             $super->assignRole(RoleEnum::SuperAdmin->value);
         }
 
-<<<<<<< HEAD
         // One demo account per remaining profile (<role>@TechLium.app / password), to try each
-=======
-        // One demo account per remaining profile (<role>@TechniLium.app / password), to try each
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
         // backoffice view and the storefront. Existing accounts are left untouched (password included).
         foreach (RoleEnum::cases() as $role) {
             if (in_array($role, [RoleEnum::SuperAdmin, RoleEnum::Administrateur], true)) {
@@ -68,11 +52,7 @@ class IdentitySeeder extends Seeder
             }
 
             $user = User::query()->firstOrCreate(
-<<<<<<< HEAD
                 ['email' => str_replace('_', '.', $role->value).'@TechLium.app'],
-=======
-                ['email' => str_replace('_', '.', $role->value).'@TechniLium.app'],
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
                 [
                     'name' => $role->label().' (démo)',
                     'password' => 'password',

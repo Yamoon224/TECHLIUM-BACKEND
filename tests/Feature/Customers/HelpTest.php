@@ -18,19 +18,11 @@ it('follows the configured return window, so the page never states a stale figur
 });
 
 it('advertises only the channels that are set', function () {
-<<<<<<< HEAD
     config(['support.contact' => ['phone' => '+225 07 00 00 00 00', 'whatsapp' => '', 'email' => 'aide@TechLium.example', 'hours' => 'Lun-Sam 8h-18h']]);
 
     $contact = $this->getJson('/api/v1/help')->assertOk()->json('contact');
 
     expect($contact)->toBe(['phone' => '+225 07 00 00 00 00', 'email' => 'aide@TechLium.example', 'hours' => 'Lun-Sam 8h-18h']);
-=======
-    config(['support.contact' => ['phone' => '+225 07 00 00 00 00', 'whatsapp' => '', 'email' => 'aide@TechniLium.example', 'hours' => 'Lun-Sam 8h-18h']]);
-
-    $contact = $this->getJson('/api/v1/help')->assertOk()->json('contact');
-
-    expect($contact)->toBe(['phone' => '+225 07 00 00 00 00', 'email' => 'aide@TechniLium.example', 'hours' => 'Lun-Sam 8h-18h']);
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
 });
 
 it('exposes nothing personal or internal', function () {

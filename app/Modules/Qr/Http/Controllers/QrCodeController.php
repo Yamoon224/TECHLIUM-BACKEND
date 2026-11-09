@@ -12,11 +12,7 @@ use Illuminate\Support\Facades\Gate;
 use OpenApi\Attributes as OA;
 
 /**
-<<<<<<< HEAD
  * What a QR code says: `TechLium:<KIND>:<REFERENCE>`, the same text a barcode scanner or the
-=======
- * What a QR code says: `TechniLium:<KIND>:<REFERENCE>`, the same text a barcode scanner or the
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
  * back-office search can read back. The record must exist (looked up by table name - this module
  * never reaches into another module's models), and the caller needs the ability that already
  * guards that kind of record, on top of the QR feature itself.
@@ -61,11 +57,7 @@ class QrCodeController extends Controller
             'kind' => $kind,
             'reference' => $reference,
             'caption' => $caption,
-<<<<<<< HEAD
             'payload' => 'TechLium:'.strtoupper($kind).':'.$reference,
-=======
-            'payload' => 'TechniLium:'.strtoupper($kind).':'.$reference,
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
         ]);
     }
 

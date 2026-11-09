@@ -162,11 +162,7 @@ it('raises alerts for stalled orders and low stock', function () {
         ->assertJsonPath('alerts.low_stock.0.stock', 0);
 });
 
-<<<<<<< HEAD
 it('names sellers in the sales-by-seller report, TechLium included', function () {
-=======
-it('names sellers in the sales-by-seller report, TechniLium included', function () {
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
     $vendor = Vendor::factory()->active()->create(['company_name' => 'TechShop Abidjan']);
     saleOn('2026-10-10', 80_000, vendorId: $vendor->id);
     saleOn('2026-10-11', 20_000);
@@ -177,11 +173,7 @@ it('names sellers in the sales-by-seller report, TechniLium included', function 
 
     $response->assertJsonPath('data.0.seller', 'TechShop Abidjan')
         ->assertJsonPath('data.0.revenue', 80_000)
-<<<<<<< HEAD
         ->assertJsonPath('data.1.seller', 'TechLium')
-=======
-        ->assertJsonPath('data.1.seller', 'TechniLium')
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
         ->assertJsonPath('data.1.vendor_id', null);
 });
 

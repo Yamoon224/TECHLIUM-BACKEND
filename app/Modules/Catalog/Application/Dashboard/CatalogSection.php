@@ -63,11 +63,7 @@ final class CatalogSection implements DashboardSection
 
         $rows = $oldest->map(fn ($offer) => [
             trim($offer->brand.' '.$offer->name),
-<<<<<<< HEAD
             $offer->vendor_id === null ? 'TechLium' : 'Vendeur #'.$offer->vendor_id,
-=======
-            $offer->vendor_id === null ? 'TechniLium' : 'Vendeur #'.$offer->vendor_id,
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
             (int) $offer->price_amount,
             $offer->created_at === null ? null : \Illuminate\Support\Carbon::parse($offer->created_at)->format('d/m/Y'),
         ])->all();

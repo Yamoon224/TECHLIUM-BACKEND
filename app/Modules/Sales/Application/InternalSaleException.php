@@ -10,11 +10,7 @@ final class InternalSaleException extends RuntimeException
 {
     public static function vendorOffer(int $offerId): self
     {
-<<<<<<< HEAD
         return new self("L'offre {$offerId} est vendue par un vendeur tiers : une vente interne ne porte que sur le stock TechLium.");
-=======
-        return new self("L'offre {$offerId} est vendue par un vendeur tiers : une vente interne ne porte que sur le stock TechniLium.");
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
     }
 
     public static function nothingToClose(): self

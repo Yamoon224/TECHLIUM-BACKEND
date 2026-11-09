@@ -11,17 +11,10 @@ use App\Modules\Returns\Application\Contracts\ReturnStatsInterface;
 use DateTimeInterface;
 
 /**
-<<<<<<< HEAD
  * TechLium's own-stock gross margin over a period, built from the public
  * contracts of Orders (what was delivered), Procurement (what it cost) and
  * Returns (what came back). Third-party vendors' sales and commissions are
  * deliberately out: this is TechLium's own merchandise only.
-=======
- * TechniLium's own-stock gross margin over a period, built from the public
- * contracts of Orders (what was delivered), Procurement (what it cost) and
- * Returns (what came back). Third-party vendors' sales and commissions are
- * deliberately out: this is TechniLium's own merchandise only.
->>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
  *
  * Margin is on DELIVERED orders, before returns; returns are reported beside
  * it, not netted - a refund covers a whole order, not just own-stock lines.

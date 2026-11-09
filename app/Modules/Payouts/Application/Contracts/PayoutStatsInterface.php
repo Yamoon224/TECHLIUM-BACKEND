@@ -9,7 +9,7 @@ use DateTimeInterface;
 /** Payouts' public read-model for Reporting (commissions, vendor debt). */
 interface PayoutStatsInterface
 {
-    /** What Technilium still owes vendors: net of payouts calculated but not yet paid. */
+    /** What TechLium still owes vendors: net of payouts calculated but not yet paid. */
     public function owedToVendors(): int;
 
     /** Commission earned on payouts calculated in [from, to]. */

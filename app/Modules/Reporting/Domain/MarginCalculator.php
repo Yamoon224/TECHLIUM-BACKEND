@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Modules\Reporting\Domain;
 
 /**
- * Technilium's own-stock margin on one delivered order (cahier §6.14
+ * TechLium's own-stock margin on one delivered order (cahier §6.14
  * "rapports de marges"). Pure integer arithmetic, so every rule is tested once:
  *
- *  - the order's coupon discount is borne by Technilium, but only the share that
+ *  - the order's coupon discount is borne by TechLium, but only the share that
  *    falls on its OWN lines belongs to this margin (the share on a third-party
  *    vendor's lines is a marketplace promotion cost, not own-stock margin);
  *  - that share is spread over the own lines pro rata to their value;

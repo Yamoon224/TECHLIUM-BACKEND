@@ -61,7 +61,7 @@ class Offer extends Model
         return $this->belongsTo(ProductVariant::class, 'product_variant_id');
     }
 
-    public function isSoldByTechnilium(): bool
+    public function isSoldByTechLium(): bool
     {
         return $this->vendor_id === null;
     }

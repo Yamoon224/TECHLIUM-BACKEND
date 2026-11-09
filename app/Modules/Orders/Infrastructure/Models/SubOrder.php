@@ -15,7 +15,7 @@ use Illuminate\Support\Carbon;
 
 /**
  * One seller's share of an order, with its own status and delivery date
- * (cahier §3 "sous-commandes"). vendor_id null = Technilium's own stock.
+ * (cahier §3 "sous-commandes"). vendor_id null = TechLium's own stock.
  *
  * @property int $id
  * @property int $order_id

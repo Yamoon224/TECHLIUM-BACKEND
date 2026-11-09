@@ -6,7 +6,7 @@ namespace App\Modules\Shared\Events;
 
 /**
  * Published by Payouts when a vendor payout is calculated: the vendor's
- * gross share leaves sales revenue, Technilium keeps the commission and owes
+ * gross share leaves sales revenue, TechLium keeps the commission and owes
  * the net to the vendor. Accounting turns it into entries.
  */
 final readonly class PayoutCalculated implements DomainEvent

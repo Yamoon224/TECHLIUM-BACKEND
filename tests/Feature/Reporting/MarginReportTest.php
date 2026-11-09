@@ -82,7 +82,7 @@ it('restricts the margin report to administrators and accountants', function () 
     $this->actingAs(marginReader(Role::Administrateur), 'sanctum')->getJson('/api/v1/admin/reports/margin')->assertOk();
 });
 
-it('computes revenue excluding VAT, cost of sales and margin on Technilium\'s own stock', function () {
+it('computes revenue excluding VAT, cost of sales and margin on TechLium\'s own stock', function () {
     $offer = Offer::factory()->create();
     // 3 units at 500 = 1 500 TTC -> 1 271 HT ; cost 300.
     marginSale('2026-10-10', [[$offer, 3, 500, null, 300]]);

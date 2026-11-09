@@ -24,7 +24,7 @@ final readonly class OrderSummaryData
         public array $lines = [],
         /** ISO-8601 delivery time, null until delivered. */
         public ?string $deliveredAt = null,
-        /** Coupon discount already taken off subtotalAmount (borne by Technilium). */
+        /** Coupon discount already taken off subtotalAmount (borne by TechLium). */
         public int $discountAmount = 0,
         public ?string $couponCode = null,
         /** The customer account the order belongs to; null for a guest order. */

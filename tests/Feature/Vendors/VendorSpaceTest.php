@@ -78,7 +78,7 @@ it('shows only the vendor\'s own lines and share of a shared order', function ()
         ->assertJsonCount(1, 'data.0.lines')
         ->assertJsonPath('data.0.lines.0.line_total_amount', 40_000);
 
-    // Nothing of the other vendor's or Technilium's lines leaks into the payload.
+    // Nothing of the other vendor's or TechLium's lines leaks into the payload.
     expect(json_encode($response->json()))->not->toContain('99000')->not->toContain('7000');
 });
 

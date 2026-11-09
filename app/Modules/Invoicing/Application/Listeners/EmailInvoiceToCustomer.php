@@ -60,14 +60,14 @@ final class EmailInvoiceToCustomer implements ShouldHandleEventsAfterCommit
                 : ($event->isCreditNote ? 'avoir' : 'facture');
             $body = $english
                 ? sprintf(
-                    "Hello %s,\n\nPlease find attached your %s %s (order %s).\n\nThank you for your trust,\nTechnilium",
+                    "Hello %s,\n\nPlease find attached your %s %s (order %s).\n\nThank you for your trust,\nTechLium",
                     $invoice->customer_name,
                     $label,
                     $invoice->number,
                     $invoice->order_number,
                 )
                 : sprintf(
-                    "Bonjour %s,\n\nVous trouverez en pièce jointe votre %s %s (commande %s).\n\nMerci de votre confiance,\nTechnilium",
+                    "Bonjour %s,\n\nVous trouverez en pièce jointe votre %s %s (commande %s).\n\nMerci de votre confiance,\nTechLium",
                     $invoice->customer_name,
                     $label,
                     $invoice->number,

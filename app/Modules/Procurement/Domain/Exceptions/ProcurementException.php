@@ -11,7 +11,7 @@ final class ProcurementException extends DomainException
 {
     public static function offerNotPurchasable(int $offerId): self
     {
-        return new self("L'offre {$offerId} est introuvable ou n'est pas du stock propre de Technilium (achat impossible).");
+        return new self("L'offre {$offerId} est introuvable ou n'est pas du stock propre de TechLium (achat impossible).");
     }
 
     public static function duplicateOffer(int $offerId): self

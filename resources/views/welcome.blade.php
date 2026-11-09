@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Technilium API</title>
-    <meta name="description" content="API REST du backend Technilium - marketplace de produits technologiques.">
+    <title>TechLium API</title>
+    <meta name="description" content="API REST du backend TechLium - marketplace de produits technologiques.">
     <link rel="icon" type="image/png" href="{{ asset('brand/logo.png') }}">
     <style>
         :root {
@@ -60,15 +60,15 @@
 <body>
     <header>
         <div class="bar">
-            <a class="brand" href="/"><img src="{{ asset('brand/logo.png') }}" alt="">Technilium</a>
+            <a class="brand" href="/"><img src="{{ asset('brand/logo.png') }}" alt="">TechLium</a>
             <span class="status">API opérationnelle</span>
         </div>
     </header>
 
     <main>
         <section class="hero">
-            <img src="{{ asset('brand/logo.png') }}" alt="Logo Technilium">
-            <h1>API <span>Technilium</span></h1>
+            <img src="{{ asset('brand/logo.png') }}" alt="Logo TechLium">
+            <h1>API <span>TechLium</span></h1>
             <p>Backend de la marketplace de produits technologiques : catalogue, commandes avec paiement à la livraison, comptes, support et gestion du backoffice.</p>
             <div class="actions">
                 <a class="btn btn-primary" href="{{ url('/api/documentation') }}">Documentation Swagger</a>
@@ -84,6 +84,6 @@
         </section>
     </main>
 
-    <footer>&copy; {{ date('Y') }} Technilium - Produits vérifiés, garantie sur chaque appareil.</footer>
+    <footer>&copy; {{ date('Y') }} TechLium - Produits vérifiés, garantie sur chaque appareil.</footer>
 </body>
 </html>

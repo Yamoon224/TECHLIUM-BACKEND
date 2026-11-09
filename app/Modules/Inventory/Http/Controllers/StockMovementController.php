@@ -37,7 +37,7 @@ class StockMovementController extends Controller
     )]
     public function index(Request $request): AnonymousResourceCollection
     {
-        $perPage = max(1, min($request->integer('per_page', 20), 100));
+        $perPage = max(1, min($request->integer('per_page', 20), 200));
 
         $query = StockMovement::query()->orderByDesc('id');
 
@@ -72,6 +72,18 @@ class StockMovementController extends Controller
         }
 
         return (new StockMovementResource($movement))->response()->setStatusCode(201);
+    }
+
+    #[OA\Get(
+        path: '/admin/stock/products',
+        summary: 'Produits actifs avec leur quantité en stock (une ligne par offre publiée)',
+        security: [['sanctum' => []]],
+        tags: ['Inventory'],
+        responses: [new OA\Response(response: 200, description: 'Produits actifs et stock')],
+    )]
+    public function products(): AnonymousResourceCollection
+    {
+        return OfferStockResource::collection($this->inventory->listActive());
     }
 
     #[OA\Get(

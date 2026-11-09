@@ -33,6 +33,8 @@ class ProductResource extends JsonResource
             'images' => $this->whenLoaded('images', fn () => $product->images->map(fn ($image) => ['id' => $image->id, 'url' => $image->url()])->all()),
             'condition_state' => $product->condition_state->value,
             'status' => $product->status->value,
+            // The TechLium offer: what stock movements are recorded against.
+            'offer_id' => $offer?->id,
             'sku' => $variant?->sku,
             'price_amount' => $offer?->price_amount,
             'currency' => $offer?->currency,

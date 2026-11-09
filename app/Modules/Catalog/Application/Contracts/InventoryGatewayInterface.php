@@ -30,6 +30,13 @@ interface InventoryGatewayInterface
     public function adjustStock(int $offerId, int $delta): int;
 
     /**
+     * The published offers of the active (published) products, with their stock.
+     *
+     * @return list<OfferStockData>
+     */
+    public function listActive(): array;
+
+    /**
      * @return list<OfferStockData>
      */
     public function listBelowThreshold(int $threshold): array;

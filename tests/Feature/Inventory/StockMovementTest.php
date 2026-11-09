@@ -136,3 +136,25 @@ it('lists offers at or below the given stock threshold', function () {
     expect($response->json())->toHaveCount(1);
     $response->assertJsonPath('0.offer_id', $low->id);
 });
+
+it('lists the published offers of active products only, with their stock', function () {
+    $active = offerWithStock(12);
+    $inactive = offerWithStock(7);
+    $inactive->variant->product->update(['status' => 'draft']);
+
+    $response = $this->actingAs(stockManager(), 'sanctum')->getJson('/api/v1/admin/stock/products')->assertOk();
+
+    expect(collect($response->json())->pluck('stock_quantity', 'offer_id')->all())->toBe([$active->id => 12]);
+});
+
+it('keeps the movement history of one offer', function () {
+    $offer = offerWithStock(10);
+    $other = offerWithStock(10);
+    $staff = stockManager();
+
+    $this->actingAs($staff, 'sanctum')->postJson('/api/v1/admin/stock/movements', ['offer_id' => $offer->id, 'quantity_delta' => 5, 'reason' => 'Réception'])->assertCreated();
+    $this->actingAs($staff, 'sanctum')->postJson('/api/v1/admin/stock/movements', ['offer_id' => $other->id, 'quantity_delta' => -2])->assertCreated();
+
+    $this->actingAs($staff, 'sanctum')->getJson('/api/v1/admin/stock/movements?offer_id='.$offer->id)
+        ->assertOk()->assertJsonCount(1, 'data')->assertJsonPath('data.0.quantity_after', 15);
+});

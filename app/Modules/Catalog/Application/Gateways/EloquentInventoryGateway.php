@@ -8,6 +8,7 @@ use App\Modules\Catalog\Application\Contracts\InventoryGatewayInterface;
 use App\Modules\Catalog\Application\Data\OfferStockData;
 use App\Modules\Catalog\Domain\Exceptions\InsufficientStockException;
 use App\Modules\Catalog\Domain\OfferStatus;
+use App\Modules\Catalog\Domain\ProductStatus;
 use App\Modules\Catalog\Infrastructure\Models\Offer;
 use Illuminate\Support\Facades\DB;
 
@@ -37,6 +38,22 @@ final class EloquentInventoryGateway implements InventoryGatewayInterface
 
             return $newQuantity;
         });
+    }
+
+    /**
+     * @return list<OfferStockData>
+     */
+    public function listActive(): array
+    {
+        return Offer::query()
+            ->where('status', OfferStatus::Published->value)
+            ->whereHas('variant.product', fn ($query) => $query->where('status', ProductStatus::Published))
+            ->with('variant.product')
+            ->get()
+            ->sortBy(fn (Offer $offer) => mb_strtolower($offer->variant->product->brand.' '.$offer->variant->product->name))
+            ->map(fn (Offer $offer) => $this->toData($offer))
+            ->values()
+            ->all();
     }
 
     /**

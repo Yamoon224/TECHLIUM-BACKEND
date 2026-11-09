@@ -69,7 +69,11 @@ final class PostingSchemes
 
     /**
      * Invoices book every sale to 701; for a vendor's share, the gross leaves
+<<<<<<< HEAD
      * revenue, TechLium keeps the commission and owes the net to the vendor.
+=======
+     * revenue, TechniLium keeps the commission and owes the net to the vendor.
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
      *
      * @return list<EntryLine>
      */

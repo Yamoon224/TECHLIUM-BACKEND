@@ -47,6 +47,7 @@ it('identifies a product by its SKU, an order, an invoice and a supply', functio
     qrUser(Role::Administrateur);
 
     $this->getJson('/api/v1/admin/qrcodes/payload?kind=product&reference=MON-27-BK')->assertOk()
+<<<<<<< HEAD
         ->assertJsonPath('payload', 'TechLium:PRODUCT:MON-27-BK')->assertJsonPath('caption', 'Écran 27 pouces - MON-27-BK');
     $this->getJson("/api/v1/admin/qrcodes/payload?kind=order&reference={$order->order_number}")->assertOk()
         ->assertJsonPath('payload', "TechLium:ORDER:{$order->order_number}");
@@ -55,6 +56,16 @@ it('identifies a product by its SKU, an order, an invoice and a supply', functio
     $number = sprintf('BC-%06d', $supplyId);
     $this->getJson("/api/v1/admin/qrcodes/payload?kind=supply&reference={$number}")->assertOk()
         ->assertJsonPath('payload', "TechLium:SUPPLY:{$number}")->assertJsonPath('caption', "Approvisionnement {$number} - Dakar Import");
+=======
+        ->assertJsonPath('payload', 'TechniLium:PRODUCT:MON-27-BK')->assertJsonPath('caption', 'Écran 27 pouces - MON-27-BK');
+    $this->getJson("/api/v1/admin/qrcodes/payload?kind=order&reference={$order->order_number}")->assertOk()
+        ->assertJsonPath('payload', "TechniLium:ORDER:{$order->order_number}");
+    $this->getJson("/api/v1/admin/qrcodes/payload?kind=invoice&reference={$invoice->number}")->assertOk()
+        ->assertJsonPath('payload', "TechniLium:INVOICE:{$invoice->number}");
+    $number = sprintf('BC-%06d', $supplyId);
+    $this->getJson("/api/v1/admin/qrcodes/payload?kind=supply&reference={$number}")->assertOk()
+        ->assertJsonPath('payload', "TechniLium:SUPPLY:{$number}")->assertJsonPath('caption', "Approvisionnement {$number} - Dakar Import");
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
     $this->getJson("/api/v1/admin/qrcodes/payload?kind=supply&reference={$supplyId}")->assertOk();
 });
 

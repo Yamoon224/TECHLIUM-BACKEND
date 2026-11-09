@@ -101,7 +101,11 @@ final class ReportingService
     }
 
     /**
+<<<<<<< HEAD
      * Revenue per seller, named (vendor_id null = TechLium's own stock).
+=======
+     * Revenue per seller, named (vendor_id null = TechniLium's own stock).
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
      *
      * @return list<array{vendor_id: int|null, seller: string, orders: int, revenue: int}>
      */
@@ -115,7 +119,11 @@ final class ReportingService
 
         return array_map(fn (array $row) => [
             'vendor_id' => $row['vendor_id'],
+<<<<<<< HEAD
             'seller' => $row['vendor_id'] === null ? 'TechLium' : (string) ($names[$row['vendor_id']] ?? 'Vendeur #'.$row['vendor_id']),
+=======
+            'seller' => $row['vendor_id'] === null ? 'TechniLium' : (string) ($names[$row['vendor_id']] ?? 'Vendeur #'.$row['vendor_id']),
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
             'orders' => $row['orders'],
             'revenue' => $row['revenue'],
         ], $rows);

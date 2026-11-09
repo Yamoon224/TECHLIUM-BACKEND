@@ -8,7 +8,11 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 /**
+<<<<<<< HEAD
  * Creates a "simple" product in one request: one variant, one TechLium
+=======
+ * Creates a "simple" product in one request: one variant, one TechniLium
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
  * (1P) offer, published immediately - staff-entered catalog data doesn't go
  * through the vendor moderation queue (OfferStatus::PendingReview is for
  * vendor-submitted offers once the Vendors module exists).

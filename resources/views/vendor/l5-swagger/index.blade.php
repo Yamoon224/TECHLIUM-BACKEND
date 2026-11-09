@@ -6,7 +6,11 @@
     <link rel="stylesheet" type="text/css" href="{{ l5_swagger_asset($documentation, 'swagger-ui.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('brand/logo.png') }}">
     <style>
+<<<<<<< HEAD
     /* TechLium brand: black and gold, from the logo. */
+=======
+    /* TechniLium brand: black and gold, from the logo. */
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
     :root { --t-gold: #f5a800; --t-gold-deep: #d87810; --t-black: #050505; }
     body { background: #fafafa; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .swagger-ui .topbar { background: var(--t-black); border-bottom: 3px solid var(--t-gold); padding: 10px 0; }
@@ -16,7 +20,11 @@
     .swagger-ui .topbar .topbar-wrapper .link::before {
         content: ""; width: 36px; height: 36px; background: url("{{ asset('brand/logo.png') }}") center / cover; border-radius: 6px;
     }
+<<<<<<< HEAD
     .swagger-ui .topbar .topbar-wrapper .link::after { content: "TechLium API"; color: var(--t-gold); font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+=======
+    .swagger-ui .topbar .topbar-wrapper .link::after { content: "TechniLium API"; color: var(--t-gold); font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
     .swagger-ui .topbar .download-url-wrapper input[type=text] { border: 2px solid var(--t-gold); }
     .swagger-ui .topbar .download-url-wrapper .download-url-button { background: var(--t-gold); color: #111; font-weight: 600; }
     .swagger-ui .info .title { color: var(--t-black); }

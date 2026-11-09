@@ -43,7 +43,11 @@ class ReportController extends Controller
 
     #[OA\Get(
         path: '/admin/reports/sales-by-seller',
+<<<<<<< HEAD
         summary: 'Chiffre d\'affaires par vendeur (TechLium inclus) sur la période',
+=======
+        summary: 'Chiffre d\'affaires par vendeur (TechniLium inclus) sur la période',
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
         security: [['sanctum' => []]],
         tags: ['Reporting'],
         responses: [new OA\Response(response: 200, description: 'Ventes par vendeur')],
@@ -57,7 +61,11 @@ class ReportController extends Controller
 
     #[OA\Get(
         path: '/admin/reports/margin',
+<<<<<<< HEAD
         summary: 'Marge brute de TechLium sur ses ventes en propre livrées (hors TVA, remises comprises, hors vendeurs tiers)',
+=======
+        summary: 'Marge brute de TechniLium sur ses ventes en propre livrées (hors TVA, remises comprises, hors vendeurs tiers)',
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
         security: [['sanctum' => []]],
         tags: ['Reporting'],
         responses: [new OA\Response(response: 200, description: 'Marge par produit et par jour')],

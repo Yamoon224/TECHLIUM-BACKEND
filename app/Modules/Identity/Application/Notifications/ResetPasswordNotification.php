@@ -43,7 +43,11 @@ final class ResetPasswordNotification extends Notification
             ->line($english
                 ? 'If you did not ask for this, you can ignore this message: your password stays as it is.'
                 : "Si vous n'êtes pas à l'origine de cette demande, ignorez ce message : votre mot de passe reste inchangé.")
+<<<<<<< HEAD
             ->salutation($english ? 'TechLium' : 'TechLium');
+=======
+            ->salutation($english ? 'TechniLium' : 'TechniLium');
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
     }
 
     /** The reset page of the right front-end, with the token and the e-mail (both URL-encoded). */

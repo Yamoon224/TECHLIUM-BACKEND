@@ -21,7 +21,11 @@ class OfferResource extends JsonResource
 
         return [
             'id' => $offer->id,
+<<<<<<< HEAD
             'seller' => $offer->isSoldByTechLium() ? 'TechLium' : 'vendor',
+=======
+            'seller' => $offer->isSoldByTechniLium() ? 'TechniLium' : 'vendor',
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
             'vendor_id' => $offer->vendor_id,
             'price' => $this->money($offer->price()),
             'compare_at_price' => ($compareAt = $offer->compareAtPrice()) ? $this->money($compareAt) : null,

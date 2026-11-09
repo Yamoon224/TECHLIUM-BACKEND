@@ -232,7 +232,11 @@ it('never lets a notification failure block the support decision', function () {
 });
 
 it('words every decision and ignores unknown ones', function () {
+<<<<<<< HEAD
     expect(App\Modules\Notifications\Domain\MessageTemplates::returnDecided(7, 'TCH-1', 'accepted', null))->toBe('TechLium : votre demande de retour RMA-000007 (commande TCH-1) est acceptée : renvoyez le colis.')
+=======
+    expect(App\Modules\Notifications\Domain\MessageTemplates::returnDecided(7, 'TCH-1', 'accepted', null))->toBe('TechniLium : votre demande de retour RMA-000007 (commande TCH-1) est acceptée : renvoyez le colis.')
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
         ->and(App\Modules\Notifications\Domain\MessageTemplates::returnDecided(7, 'TCH-1', 'refunded', null))->toBeNull()
         ->and(mb_strlen(App\Modules\Notifications\Domain\MessageTemplates::returnDecided(7, 'TCH-1', 'rejected', str_repeat('é', 500))))->toBeLessThan(260);
 });
@@ -281,10 +285,18 @@ it('defaults to French, also for an unknown or missing language', function () {
 it('words the English messages and keeps French the default', function () {
     $templates = App\Modules\Notifications\Domain\MessageTemplates::class;
 
+<<<<<<< HEAD
     expect($templates::orderStatus('Awa Diallo', 'TCH-1', 'shipped', 'en'))->toBe('TechLium: Awa, your order TCH-1 has shipped and is on its way to you.')
         ->and($templates::orderStatus('Awa Diallo', 'TCH-1', 'shipped'))->toContain('est expédiée')
         ->and($templates::orderStatus('Awa Diallo', 'TCH-1', 'pending', 'en'))->toBeNull()
         ->and($templates::returnRefunded('TCH-1', 30_000, 'XOF', 'en'))->toBe('TechLium: your return on order TCH-1 is refunded (30 000 F CFA).')
         ->and($templates::returnDecided(7, 'TCH-1', 'rejected', null, 'en'))->toBe('TechLium: your return request RMA-000007 (order TCH-1) is refused.')
+=======
+    expect($templates::orderStatus('Awa Diallo', 'TCH-1', 'shipped', 'en'))->toBe('TechniLium: Awa, your order TCH-1 has shipped and is on its way to you.')
+        ->and($templates::orderStatus('Awa Diallo', 'TCH-1', 'shipped'))->toContain('est expédiée')
+        ->and($templates::orderStatus('Awa Diallo', 'TCH-1', 'pending', 'en'))->toBeNull()
+        ->and($templates::returnRefunded('TCH-1', 30_000, 'XOF', 'en'))->toBe('TechniLium: your return on order TCH-1 is refunded (30 000 F CFA).')
+        ->and($templates::returnDecided(7, 'TCH-1', 'rejected', null, 'en'))->toBe('TechniLium: your return request RMA-000007 (order TCH-1) is refused.')
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
         ->and($templates::returnDecided(7, 'TCH-1', 'refunded', null, 'en'))->toBeNull();
 });

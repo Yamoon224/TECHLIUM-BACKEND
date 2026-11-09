@@ -121,7 +121,11 @@ it('invoices the net amount with VAT on what was paid, and shows the discount', 
         ->assertJsonPath('coupon_code', 'VINGT');
 });
 
+<<<<<<< HEAD
 it('keeps the vendor paid on the list price: the discount is TechLium\'s cost', function () {
+=======
+it('keeps the vendor paid on the list price: the discount is TechniLium\'s cost', function () {
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
     $vendor = Vendor::factory()->active()->create();
     $offer = Offer::factory()->fromVendor($vendor->id)->create(['price_amount' => 100_000, 'stock_quantity' => 5]);
     Coupon::factory()->create(['code' => 'DIX', 'value' => 10]);

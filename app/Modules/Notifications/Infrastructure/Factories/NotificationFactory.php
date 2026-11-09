@@ -24,7 +24,11 @@ class NotificationFactory extends Factory
             'event' => 'order.confirmed',
             'channel' => 'sms',
             'recipient' => fake()->numerify('07########'),
+<<<<<<< HEAD
             'body' => 'TechLium : votre commande est confirmée.',
+=======
+            'body' => 'TechniLium : votre commande est confirmée.',
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
             'reference' => $reference,
             'status' => NotificationStatus::Sent,
             'attempts' => 1,

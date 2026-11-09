@@ -8,8 +8,13 @@ use OpenApi\Attributes as OA;
 
 #[OA\Info(
     version: '1.0.0',
+<<<<<<< HEAD
     title: 'TechLium API',
     description: "API REST du backend TechLium - marketplace de produits technologiques et backoffice de gestion.
+=======
+    title: 'TechniLium API',
+    description: "API REST du backend TechniLium - marketplace de produits technologiques et backoffice de gestion.
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
 
 Authentification : jeton Bearer (Sanctum). Obtenez un jeton via les routes Auth, puis cliquez sur « Authorize ». Paiement à la livraison ; montants en F CFA.",
 )]

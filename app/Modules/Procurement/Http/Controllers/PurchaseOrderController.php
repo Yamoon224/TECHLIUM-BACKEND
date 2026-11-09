@@ -52,7 +52,11 @@ class PurchaseOrderController extends Controller
 
     #[OA\Post(
         path: '/admin/purchase-orders',
+<<<<<<< HEAD
         summary: 'Crée un bon de commande (brouillon) sur du stock propre de TechLium',
+=======
+        summary: 'Crée un bon de commande (brouillon) sur du stock propre de TechniLium',
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
         security: [['sanctum' => []]],
         tags: ['Procurement'],
         responses: [new OA\Response(response: 201, description: 'Bon créé'), new OA\Response(response: 422, description: 'Offre non achetable ou données invalides')],

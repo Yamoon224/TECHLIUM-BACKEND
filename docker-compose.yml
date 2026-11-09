@@ -1,19 +1,36 @@
+<<<<<<< HEAD
 name: TechLium
+=======
+name: TechniLium
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
 
 services:
   mysql:
     image: mysql:8.0
+<<<<<<< HEAD
     container_name: TechLium-mysql
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: TechLium
       MYSQL_USER: TechLium
       MYSQL_PASSWORD: TechLium
+=======
+    container_name: TechniLium-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: TechniLium
+      MYSQL_USER: TechniLium
+      MYSQL_PASSWORD: TechniLium
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3307:3306"
     volumes:
+<<<<<<< HEAD
       - TechLium-mysql:/var/lib/mysql
+=======
+      - TechniLium-mysql:/var/lib/mysql
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
@@ -22,11 +39,16 @@ services:
 
   redis:
     image: redis:7-alpine
+<<<<<<< HEAD
     container_name: TechLium-redis
+=======
+    container_name: TechniLium-redis
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
     restart: unless-stopped
     ports:
       - "6380:6379"
     volumes:
+<<<<<<< HEAD
       - TechLium-redis:/data
 
   meilisearch:
@@ -35,21 +57,45 @@ services:
     restart: unless-stopped
     environment:
       MEILI_MASTER_KEY: TechLium_dev_master_key
+=======
+      - TechniLium-redis:/data
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.10
+    container_name: TechniLium-meilisearch
+    restart: unless-stopped
+    environment:
+      MEILI_MASTER_KEY: TechniLium_dev_master_key
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
       MEILI_ENV: development
     ports:
       - "7700:7700"
     volumes:
+<<<<<<< HEAD
       - TechLium-meilisearch:/meili_data
 
   mailpit:
     image: axllent/mailpit:latest
     container_name: TechLium-mailpit
+=======
+      - TechniLium-meilisearch:/meili_data
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: TechniLium-mailpit
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
     restart: unless-stopped
     ports:
       - "8025:8025"
       - "1025:1025"
 
 volumes:
+<<<<<<< HEAD
   TechLium-mysql:
   TechLium-redis:
   TechLium-meilisearch:
+=======
+  TechniLium-mysql:
+  TechniLium-redis:
+  TechniLium-meilisearch:
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f

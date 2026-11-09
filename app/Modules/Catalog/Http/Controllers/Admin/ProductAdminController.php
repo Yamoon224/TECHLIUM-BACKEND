@@ -26,7 +26,11 @@ use OpenApi\Attributes as OA;
  * Staff-facing catalog management (cahier §6.1 "PIM"). Gated by
  * can:manage-catalog - gestionnaire_catalogue or administrateur.
  *
+<<<<<<< HEAD
  * Handles "simple" products: one variant, one TechLium (1P) offer per
+=======
+ * Handles "simple" products: one variant, one TechniLium (1P) offer per
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
  * product. Multi-vendor / multi-offer products belong to the Vendors module
  * once it exists.
  */
@@ -56,7 +60,11 @@ class ProductAdminController extends Controller
 
     #[OA\Post(
         path: '/admin/products',
+<<<<<<< HEAD
         summary: 'Crée un produit simple (une variante, une offre TechLium publiée)',
+=======
+        summary: 'Crée un produit simple (une variante, une offre TechniLium publiée)',
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
         security: [['sanctum' => []]],
         tags: ['Catalog Admin'],
         responses: [
@@ -174,7 +182,11 @@ class ProductAdminController extends Controller
 
     #[OA\Put(
         path: '/admin/products/{product}',
+<<<<<<< HEAD
         summary: 'Met à jour un produit et son offre TechLium',
+=======
+        summary: 'Met à jour un produit et son offre TechniLium',
+>>>>>>> 2a32efc33a7ad925aaa66b3778733f66317cb71f
         security: [['sanctum' => []]],
         tags: ['Catalog Admin'],
         responses: [

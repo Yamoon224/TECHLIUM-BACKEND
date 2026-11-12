@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Modules\Invoicing\Application;
 
-use App\Modules\Invoicing\Domain\AmountInWords;
-use App\Modules\Invoicing\Domain\AmountInWordsEn;
 use App\Modules\Invoicing\Domain\InvoiceDocumentLabels;
 use App\Modules\Invoicing\Domain\InvoiceType;
 use App\Modules\Invoicing\Infrastructure\Models\Invoice;
+use App\Modules\Payments\Application\Contracts\PaymentLookupInterface;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 /**
@@ -18,6 +17,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
  */
 class RenderInvoiceDocument
 {
+    public function __construct(private readonly PaymentLookupInterface $payments) {}
+
     /** The HTML the PDF is made from - kept separate so it can be inspected and tested. */
     public function html(Invoice $invoice, string $locale = 'fr'): string
     {
@@ -31,12 +32,30 @@ class RenderInvoiceDocument
             't' => $labels,
             'title' => $isCredit ? $labels['credit_note'] : $labels['invoice'],
             'company' => (array) config('invoicing.company'),
-            'amountInWords' => ucfirst($locale === 'en' ? AmountInWordsEn::francsCfa($invoice->total_amount) : AmountInWords::francsCfa($invoice->total_amount)),
+            'methodLabel' => $this->methodLabel($invoice, $labels),
             // A credit note names the invoice it cancels.
             'creditedNumber' => $invoice->credited_invoice_id !== null
                 ? Invoice::query()->whereKey($invoice->credited_invoice_id)->value('number')
                 : null,
         ])->render();
+    }
+
+    /**
+     * How the order was settled, when a payment was received ("Mode de règlement").
+     *
+     * @param  array<string, mixed>  $labels
+     */
+    private function methodLabel(Invoice $invoice, array $labels): ?string
+    {
+        $payment = $this->payments->collectedForOrders([$invoice->order_number])[$invoice->order_number] ?? null;
+
+        if ($payment === null) {
+            return null;
+        }
+
+        $label = $labels[$payment->method] ?? $payment->method;
+
+        return $payment->provider !== null ? $label.' ('.ucwords(str_replace('_', ' ', $payment->provider)).')' : $label;
     }
 
     public function pdf(Invoice $invoice, string $locale = 'fr'): string

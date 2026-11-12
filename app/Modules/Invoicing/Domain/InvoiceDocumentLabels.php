@@ -12,7 +12,7 @@ namespace App\Modules\Invoicing\Domain;
 final class InvoiceDocumentLabels
 {
     /**
-     * @return array<string, string>
+     * @return array<string, mixed>
      */
     public static function for(string $locale): array
     {
@@ -26,7 +26,7 @@ final class InvoiceDocumentLabels
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, mixed>
      */
     private static function french(): array
     {
@@ -34,31 +34,51 @@ final class InvoiceDocumentLabels
             'lang' => 'fr',
             'invoice' => 'FACTURE',
             'credit_note' => 'AVOIR',
-            'phone' => 'Tél. :',
+            'address' => 'Adresse :',
+            'phone' => 'Tel :',
+            'email' => 'Email :',
             'number' => 'N°',
             'date' => 'Date :',
+            'at' => 'à',
+            'supplier' => 'Fournisseur',
+            'customer' => 'Client',
             'order' => 'Commande :',
             'cancels' => 'Annule la facture :',
-            'customer' => 'Client',
             'credit_reason' => "Motif de l'avoir :",
             'description' => 'Désignation',
-            'quantity' => 'Qté',
-            'unit_price' => 'Prix unitaire TTC',
-            'line_total' => 'Total TTC',
+            'quantity' => 'Quantité',
+            'unit' => 'Unité',
+            'piece' => 'pièce',
+            'unit_price' => 'Prix Unitaire',
+            'line_total' => 'Total',
             'discount' => 'Remise',
-            'total_net' => 'Total HT',
-            'vat' => 'TVA',
-            'total_gross_invoice' => 'Total TTC',
-            'total_gross_credit' => "Total de l'avoir TTC",
-            'words_invoice' => 'Arrêté la présente facture à la somme de',
-            'words_credit' => 'Arrêté le présent avoir à la somme de',
-            'footer_invoice' => 'Document de facturation émis par :issuer - n° :number. Un document émis ne se modifie pas : toute correction passe par un avoir.',
-            'footer_credit' => "Document d'avoir émis par :issuer - n° :number. Un document émis ne se modifie pas : toute correction passe par un avoir.",
+            'total' => 'TOTAL:',
+            'payment_method' => 'Mode de règlement :',
+            'cod' => 'Paiement à la livraison',
+            'cash' => 'Espèces',
+            'mobile_money' => 'Mobile money',
+            'conditions_title' => 'CONDITIONS & GARANTIES',
+            'conditions' => [
+                'Garantie 1 an pieces, hors casse.',
+                'IMEI doit correspondre a celui de cette facture.',
+                'Choc, fissure, oxydation (eau), ouverture par un tiers : garantie annulee.',
+                'Presentation de cette facture obligatoire pour tout SAV.',
+            ],
+            'legal_title' => 'MENTIONS LÉGALES',
+            'legal' => [
+                'TVA non applicable, dispense de declaration (micro-entreprise).',
+                'Aucun escompte accorde en cas de paiement anticipe.',
+                'Reclamation a formuler dans les 48h suivant la livraison.',
+            ],
+            'signature' => 'Signature & Cachet',
+            'thanks' => 'Merci pour votre fidélité',
+            'page' => 'Page',
+            'of' => 'sur',
         ];
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, mixed>
      */
     private static function english(): array
     {
@@ -66,26 +86,46 @@ final class InvoiceDocumentLabels
             'lang' => 'en',
             'invoice' => 'INVOICE',
             'credit_note' => 'CREDIT NOTE',
-            'phone' => 'Tel.:',
+            'address' => 'Address:',
+            'phone' => 'Tel:',
+            'email' => 'Email:',
             'number' => 'No.',
             'date' => 'Date:',
+            'at' => 'at',
+            'supplier' => 'Supplier',
+            'customer' => 'Customer',
             'order' => 'Order:',
             'cancels' => 'Cancels invoice:',
-            'customer' => 'Customer',
             'credit_reason' => 'Reason for the credit note:',
             'description' => 'Description',
-            'quantity' => 'Qty',
-            'unit_price' => 'Unit price incl. VAT',
-            'line_total' => 'Total incl. VAT',
+            'quantity' => 'Quantity',
+            'unit' => 'Unit',
+            'piece' => 'piece',
+            'unit_price' => 'Unit price',
+            'line_total' => 'Total',
             'discount' => 'Discount',
-            'total_net' => 'Total excl. VAT',
-            'vat' => 'VAT',
-            'total_gross_invoice' => 'Total incl. VAT',
-            'total_gross_credit' => 'Credit note total incl. VAT',
-            'words_invoice' => 'This invoice is closed at the sum of',
-            'words_credit' => 'This credit note is closed at the sum of',
-            'footer_invoice' => 'Invoice issued by :issuer - no. :number. An issued document cannot be changed: any correction is made through a credit note.',
-            'footer_credit' => 'Credit note issued by :issuer - no. :number. An issued document cannot be changed: any correction is made through a credit note.',
+            'total' => 'TOTAL:',
+            'payment_method' => 'Payment method:',
+            'cod' => 'Cash on delivery',
+            'cash' => 'Cash',
+            'mobile_money' => 'Mobile money',
+            'conditions_title' => 'TERMS & WARRANTY',
+            'conditions' => [
+                '1-year warranty on parts, excluding breakage.',
+                'The IMEI must match the one on this invoice.',
+                'Impact, cracks, water damage, opening by a third party: warranty void.',
+                'This invoice must be presented for any after-sales service.',
+            ],
+            'legal_title' => 'LEGAL NOTICES',
+            'legal' => [
+                'VAT not applicable, exempt from filing (micro-enterprise).',
+                'No discount is granted for early payment.',
+                'Claims must be made within 48 hours of delivery.',
+            ],
+            'signature' => 'Signature & Stamp',
+            'thanks' => 'Thank you for your loyalty',
+            'page' => 'Page',
+            'of' => 'of',
         ];
     }
 }

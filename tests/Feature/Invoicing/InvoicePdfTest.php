@@ -7,6 +7,8 @@ use App\Modules\Identity\Infrastructure\Models\User;
 use App\Modules\Invoicing\Application\RenderInvoiceDocument;
 use App\Modules\Invoicing\Domain\InvoiceType;
 use App\Modules\Invoicing\Infrastructure\Models\Invoice;
+use App\Modules\Payments\Application\Contracts\PaymentLookupInterface;
+use App\Modules\Payments\Application\Data\CollectedPaymentData;
 use Spatie\Permission\Models\Role as RoleModel;
 
 beforeEach(function () {
@@ -46,7 +48,7 @@ function html(Invoice $invoice): string
 }
 
 it('prints the TechLium logo on the document', function () {
-    expect(app(RenderInvoiceDocument::class)->html(issuedInvoice()))->toContain('<img src="data:image/png;base64,');
+    expect(app(RenderInvoiceDocument::class)->html(issuedInvoice()))->toContain('data:image/png;base64,');
 });
 
 it('restricts the document to finance roles', function () {
@@ -74,26 +76,55 @@ it('answers 404 for an unknown document', function () {
     $this->actingAs(docUser(), 'sanctum')->get('/api/v1/admin/invoices/999999/pdf')->assertNotFound();
 });
 
-it('prints the number, customer, order, lines, VAT and the total in words', function () {
+it('prints the number, date, customer, order, lines and the total in the TechLium layout', function () {
     $page = html(issuedInvoice());
 
-    expect($page)->toContain('FACTURE')
-        ->and($page)->toContain('FAC-2026-000042')
-        ->and($page)->toContain('27/10/2026')
+    expect($page)->toContain('FACTURE N° FAC-2026-000042')
+        ->and($page)->toContain('Date : 27/10/2026 à 10:00')
+        ->and($page)->toContain('FOURNISSEUR')->toContain('CLIENT')->toContain('TECHLIUM GROUP')
         ->and($page)->toContain('Awa Diallo')
         ->and($page)->toContain('TCH-20261027-ABC123')
         ->and($page)->toContain('Samsung Galaxy A15')
-        ->and($page)->toContain("100\u{00A0}000\u{00A0}F\u{00A0}CFA")     // total HT
-        ->and($page)->toContain("18\u{00A0}000\u{00A0}F\u{00A0}CFA")        // VAT
-        ->and($page)->toContain("118\u{00A0}000\u{00A0}F\u{00A0}CFA")       // total TTC
-        ->and($page)->toContain('TVA (18 %)')
-        ->and($page)->toContain('Cent dix-huit mille francs CFA');
+        ->and($page)->toContain('Désignation')->toContain('Quantité')->toContain('Unité')->toContain('Prix Unitaire')
+        ->and($page)->toContain('pièce')
+        ->and($page)->toContain("59\u{00A0}000,00\u{00A0}CFA")      // unit price
+        ->and($page)->toContain("118\u{00A0}000,00\u{00A0}CFA")     // line and grand total
+        ->and($page)->toContain('TOTAL:');
+});
+
+it('prints the warranty conditions, the legal notices, the signature box and the page numbers', function () {
+    $page = html(issuedInvoice());
+
+    expect($page)->toContain('CONDITIONS &amp; GARANTIES')->toContain('Garantie 1 an pieces, hors casse.')
+        ->and($page)->toContain('MENTIONS LÉGALES')->toContain('TVA non applicable, dispense de declaration (micro-entreprise).')
+        ->and($page)->toContain('Reclamation a formuler dans les 48h suivant la livraison.')
+        ->and($page)->toContain('Signature &amp; Cachet')->toContain('Merci pour votre fidélité')
+        ->and($page)->toContain('Page 1 sur 2')->toContain('Page 2 sur 2');
+});
+
+it('shows the payment method when the order was paid, and nothing when it was not', function () {
+    expect(html(issuedInvoice()))->not->toContain('Mode de règlement');
+
+    app()->bind(PaymentLookupInterface::class, fn () => new class implements PaymentLookupInterface
+    {
+        public function collectedForOrders(array $orderNumbers): array
+        {
+            return ['TCH-20261027-ABC123' => new CollectedPaymentData(1, 'REC-000001', 'TCH-20261027-ABC123', 'cash', null, 118_000, null, 'XOF', null)];
+        }
+
+        public function receiptPdfForOrder(string $orderNumber, string $locale = 'fr', string $format = 'a5'): ?array
+        {
+            return null;
+        }
+    });
+
+    expect(html(issuedInvoice(['number' => 'FAC-2026-000044'])))->toContain('Mode de règlement :')->toContain('Espèces');
 });
 
 it('shows the coupon discount and its code when there was one', function () {
     $page = html(issuedInvoice(['discount_amount' => 11_800, 'coupon_code' => 'BIENVENUE10']));
 
-    expect($page)->toContain('Remise (BIENVENUE10)')->toContain("11\u{00A0}800\u{00A0}F\u{00A0}CFA");
+    expect($page)->toContain('Remise (BIENVENUE10)')->toContain("11\u{00A0}800,00\u{00A0}CFA");
     expect(html(issuedInvoice(['number' => 'FAC-2026-000043'])))->not->toContain('Remise');
 });
 
@@ -109,11 +140,10 @@ it('names the invoice a credit note cancels, and its reason', function () {
     // Blade escapes the apostrophe as &#039; (valid HTML, shown normally): compare the decoded text.
     $page = html_entity_decode(html($credit), ENT_QUOTES);
 
-    expect($page)->toContain('AVOIR')
+    expect($page)->toContain('AVOIR N° AV-2026-000001')
         ->and($page)->toContain('Annule la facture : FAC-2026-000042')
         ->and($page)->toContain('Produit retourné')
-        ->and($page)->toContain('Total de l\'avoir TTC')
-        ->and($page)->toContain('Cinquante-neuf mille francs CFA');
+        ->and($page)->toContain("59\u{00A0}000,00\u{00A0}CFA");
 
     $this->actingAs(docUser(), 'sanctum')->get("/api/v1/admin/invoices/{$credit->id}/pdf")->assertOk()
         ->assertHeader('content-type', 'application/pdf');
@@ -142,7 +172,7 @@ it('prints the issuer from configuration, and the legal line only when it is set
     ]]);
 
     $page = html(issuedInvoice());
-    expect($page)->toContain('TechLium SARL')->toContain('Abidjan, Cocody')->toContain('RCCM CI-ABJ-2026-B-00000');
+    expect($page)->toContain('TECHLIUM SARL')->toContain('Abidjan, Cocody')->toContain('RCCM CI-ABJ-2026-B-00000');
 
     config(['invoicing.company.legal' => '', 'invoicing.company.address' => '']);
     $bare = html(issuedInvoice(['number' => 'FAC-2026-000050']));
@@ -161,15 +191,14 @@ it('renders the same document every time, since an issued invoice cannot change'
     expect(html($invoice))->toBe(html($invoice->fresh()));
 });
 
-it('renders an English version with English labels and the amount in English words', function () {
+it('renders an English version with English labels', function () {
     $invoice = issuedInvoice();
 
     $page = app(RenderInvoiceDocument::class)->html($invoice, 'en');
 
-    expect($page)->toContain('INVOICE')->toContain('Customer')->toContain('Total incl. VAT')->toContain('VAT (18 %)')
-        ->toContain('One hundred eighteen thousand CFA francs')
-        ->toContain('Awa Diallo')->toContain('FAC-2026-000042')->toContain("118\u{00A0}000\u{00A0}F\u{00A0}CFA")
-        ->not->toContain('FACTURE')->not->toContain('francs CFA');
+    expect($page)->toContain('INVOICE No. FAC-2026-000042')->toContain('SUPPLIER')->toContain('Customer')->toContain('TERMS &amp; WARRANTY')
+        ->toContain('Awa Diallo')->toContain("118\u{00A0}000,00\u{00A0}CFA")->toContain('Page 1 of 2')
+        ->not->toContain('FACTURE')->not->toContain('Désignation');
 });
 
 it('renders an English credit note, naming the invoice it cancels', function () {
@@ -182,8 +211,7 @@ it('renders an English credit note, naming the invoice it cancels', function () 
 
     $page = html_entity_decode(app(RenderInvoiceDocument::class)->html($credit, 'en'), ENT_QUOTES);
 
-    expect($page)->toContain('CREDIT NOTE')->toContain('Cancels invoice: FAC-2026-000042')->toContain('Credit note total incl. VAT')
-        ->toContain('Fifty-nine thousand CFA francs');
+    expect($page)->toContain('CREDIT NOTE No. AV-2026-000001')->toContain('Cancels invoice: FAC-2026-000042')->toContain('Returned product');
 });
 
 it('falls back to French for an unknown language and stays French by default', function () {

@@ -52,6 +52,14 @@ class InvoiceController extends Controller
             $query->where('type', $request->string('type')->toString());
         }
 
+        if ($request->date('from') !== null) {
+            $query->whereDate('issued_at', '>=', $request->date('from')->toDateString());
+        }
+
+        if ($request->date('to') !== null) {
+            $query->whereDate('issued_at', '<=', $request->date('to')->toDateString());
+        }
+
         return InvoiceResource::collection($query->paginate($perPage));
     }
 

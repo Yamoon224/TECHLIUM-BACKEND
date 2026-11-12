@@ -53,6 +53,14 @@ class PaymentController extends Controller
             $query->where('status', $request->string('status')->toString());
         }
 
+        if ($request->date('from') !== null) {
+            $query->whereDate('created_at', '>=', $request->date('from')->toDateString());
+        }
+
+        if ($request->date('to') !== null) {
+            $query->whereDate('created_at', '<=', $request->date('to')->toDateString());
+        }
+
         return PaymentResource::collection($query->paginate($perPage));
     }
 

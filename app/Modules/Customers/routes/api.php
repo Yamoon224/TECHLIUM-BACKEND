@@ -5,12 +5,21 @@ declare(strict_types=1);
 use App\Modules\Customers\Http\Controllers\CustomerTicketController;
 use App\Modules\Customers\Http\Controllers\HelpController;
 use App\Modules\Customers\Http\Controllers\ReviewController;
+use App\Modules\Customers\Http\Controllers\ShopAdminController;
+use App\Modules\Customers\Http\Controllers\ShopController;
 use App\Modules\Customers\Http\Controllers\ReviewModerationController;
 use App\Modules\Customers\Http\Controllers\StaffTicketController;
 use Illuminate\Support\Facades\Route;
 
 // Public: the help page.
 Route::get('/help', [HelpController::class, 'show'])->middleware('throttle:60,1');
+
+Route::get('/shop', [ShopController::class, 'show'])->middleware('throttle:60,1');
+
+Route::prefix('admin/shop')->middleware(['auth:sanctum', 'can:manage-catalog'])->group(function () {
+    Route::get('/', [ShopAdminController::class, 'show']);
+    Route::put('/', [ShopAdminController::class, 'update']);
+});
 
 Route::prefix('reviews')->group(function () {
     // Public reading, throttled: reviews are shown on every product page.

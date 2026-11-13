@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Customers\Http\Controllers;
 
+use App\Modules\Customers\Infrastructure\Models\ShopSetting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use OpenApi\Attributes as OA;
@@ -23,17 +24,17 @@ class HelpController extends Controller
     )]
     public function show(): JsonResponse
     {
-        $contact = (array) config('support.contact');
+        $shop = ShopSetting::current();
 
         return response()->json([
             'return_window_days' => (int) config('returns.window_days'),
             'first_response_hours' => (int) config('support.first_response_hours.normal'),
             // Only what is configured: an empty channel is not advertised.
             'contact' => array_filter([
-                'phone' => $contact['phone'] ?? '',
-                'whatsapp' => $contact['whatsapp'] ?? '',
-                'email' => $contact['email'] ?? '',
-                'hours' => $contact['hours'] ?? '',
+                'phone' => $shop->contact('phone'),
+                'whatsapp' => $shop->contact('whatsapp'),
+                'email' => $shop->contact('email'),
+                'hours' => $shop->contact('hours'),
             ], fn ($value) => trim((string) $value) !== ''),
         ]);
     }

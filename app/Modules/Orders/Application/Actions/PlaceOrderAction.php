@@ -143,21 +143,23 @@ final class PlaceOrderAction
                 $subOrder->items()->createMany(array_map(fn (array $line) => $line + ['order_id' => $order->id], $group));
             }
 
+            // The online shop takes any quantity of an active product (what the stock does not
+            // cover is a backorder); a counter sale needs the goods on the shelf.
+            $taken = [];
             foreach ($lines as $line) {
                 try {
-                    $this->catalog->decrementStock($line['offer_id'], $line['quantity']);
+                    $units = $this->catalog->decrementStock($line['offer_id'], $line['quantity'], $channel === 'online');
                 } catch (InsufficientStockException) {
                     throw OfferUnavailableException::insufficientStock($line['offer_id']);
                 }
+
+                if ($units > 0) {
+                    $taken[] = ['offer_id' => $line['offer_id'], 'quantity' => $units];
+                }
             }
 
-            // The stock is out: Inventory records it in each product's movement history.
-            event(new StockSold(
-                $order->order_number,
-                $channel,
-                $soldBy,
-                array_map(fn (array $line) => ['offer_id' => $line['offer_id'], 'quantity' => $line['quantity']], $lines),
-            ));
+            // The stock is out: Inventory records it in each product's movement history (what actually left the shelf).
+            event(new StockSold($order->order_number, $channel, $soldBy, $taken));
 
             // Raised inside the transaction: a rolled-back order sends nothing. A counter sale
             // texts nobody: the customer is standing at the till and has no delivery code to use.

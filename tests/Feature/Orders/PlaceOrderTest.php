@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Modules\Catalog\Domain\OfferStatus;
 use App\Modules\Catalog\Infrastructure\Models\Offer;
 use App\Modules\Identity\Infrastructure\Models\User;
+use App\Modules\Inventory\Infrastructure\Models\StockMovement;
 use App\Modules\Orders\Infrastructure\Models\Order;
 
 function checkoutPayload(array $items, array $overrides = []): array
@@ -77,29 +78,38 @@ it('rejects checkout for an unpublished offer', function () {
     ]))->assertStatus(422);
 });
 
-it('refuses to oversell and rolls back the whole order', function () {
-    $offer = Offer::factory()->create(['stock_quantity' => 1]);
+it('takes an order for more than the stock: the stock stops at zero and the order stands', function () {
+    $offer = Offer::factory()->create(['stock_quantity' => 1, 'status' => OfferStatus::Published]);
 
     $response = $this->postJson('/api/v1/orders', checkoutPayload([
         ['offer_id' => $offer->id, 'quantity' => 5],
     ]));
 
-    $response->assertStatus(422);
-    expect($offer->fresh()->stock_quantity)->toBe(1);
-    expect(Order::query()->count())->toBe(0);
+    $response->assertCreated();
+    $response->assertJsonPath('items.0.quantity', 5);
+    expect($offer->fresh()->stock_quantity)->toBe(0);
+    expect(Order::query()->count())->toBe(1);
 });
 
-it('rolls back the entire order if any single line fails', function () {
-    $ok = Offer::factory()->create(['stock_quantity' => 10]);
-    $short = Offer::factory()->create(['stock_quantity' => 1]);
+it('takes an order for a product that is out of stock', function () {
+    $offer = Offer::factory()->create(['stock_quantity' => 0, 'status' => OfferStatus::Published]);
 
     $this->postJson('/api/v1/orders', checkoutPayload([
-        ['offer_id' => $ok->id, 'quantity' => 2],
-        ['offer_id' => $short->id, 'quantity' => 5],
-    ]))->assertStatus(422);
+        ['offer_id' => $offer->id, 'quantity' => 2],
+    ]))->assertCreated();
 
-    expect($ok->fresh()->stock_quantity)->toBe(10);
-    expect(Order::query()->count())->toBe(0);
+    expect($offer->fresh()->stock_quantity)->toBe(0);
+});
+
+it('records in the stock history only what really left the shelf', function () {
+    $offer = Offer::factory()->create(['stock_quantity' => 2, 'status' => OfferStatus::Published]);
+
+    $this->postJson('/api/v1/orders', checkoutPayload([
+        ['offer_id' => $offer->id, 'quantity' => 5],
+    ]))->assertCreated();
+
+    $movement = StockMovement::query()->where('offer_id', $offer->id)->first();
+    expect($movement?->quantity_delta)->toBe(-2)->and($movement?->quantity_after)->toBe(0);
 });
 
 it('looks up a placed order by its order number and matching phone', function () {

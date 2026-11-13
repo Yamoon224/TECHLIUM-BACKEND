@@ -32,6 +32,7 @@ class ProductResource extends JsonResource
             'image_url' => $product->relationLoaded('images') ? $product->imageUrl() : null,
             'images' => $this->whenLoaded('images', fn () => $product->images->map(fn ($image) => ['id' => $image->id, 'url' => $image->url()])->all()),
             'attributes' => $product->attributes,
+            'colors' => $product->colors ?? [],
             'condition_state' => $product->condition_state->value,
             'category' => $this->whenLoaded('category', fn () => new CategoryResource($product->category)),
             'best_offer' => $this->when(

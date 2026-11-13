@@ -162,3 +162,36 @@ it('leaves the order unattached for a guest checkout', function () {
 
     expect(Order::query()->first()->customer_id)->toBeNull();
 });
+
+it('snapshots the colour picked on a line, with the swatch taken from the catalogue', function () {
+    $offer = Offer::factory()->create(['stock_quantity' => 5, 'status' => OfferStatus::Published]);
+    $offer->variant->product->update(['colors' => [['name' => 'Bleu ciel', 'hex' => '#a9c7e8'], ['name' => 'Noir', 'hex' => '#1c1c1e']]]);
+
+    $response = $this->postJson('/api/v1/orders', checkoutPayload([
+        ['offer_id' => $offer->id, 'quantity' => 1, 'color' => 'bleu ciel'],
+    ]));
+
+    $response->assertCreated();
+    $response->assertJsonPath('items.0.color.name', 'Bleu ciel');
+    $response->assertJsonPath('items.0.color.hex', '#a9c7e8');
+});
+
+it('rejects a colour the product does not offer', function () {
+    $offer = Offer::factory()->create(['stock_quantity' => 5, 'status' => OfferStatus::Published]);
+    $offer->variant->product->update(['colors' => [['name' => 'Noir', 'hex' => '#1c1c1e']]]);
+
+    $this->postJson('/api/v1/orders', checkoutPayload([
+        ['offer_id' => $offer->id, 'quantity' => 1, 'color' => 'Rose'],
+    ]))->assertStatus(422);
+
+    expect(Order::query()->count())->toBe(0);
+    expect($offer->fresh()->stock_quantity)->toBe(5);
+});
+
+it('still orders a product without colours', function () {
+    $offer = Offer::factory()->create(['stock_quantity' => 5, 'status' => OfferStatus::Published]);
+
+    $this->postJson('/api/v1/orders', checkoutPayload([
+        ['offer_id' => $offer->id, 'quantity' => 1],
+    ]))->assertCreated()->assertJsonPath('items.0.color', null);
+});

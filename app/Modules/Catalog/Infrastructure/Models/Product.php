@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $name_en
  * @property string|null $description_en
  * @property array<string, mixed>|null $attributes
+ * @property list<array{name: string, hex: string}>|null $colors
  * @property ConditionState $condition_state
  * @property ProductStatus $status
  * @property-read Category $category
@@ -42,6 +43,7 @@ class Product extends Model
         'name_en',
         'description_en',
         'attributes',
+        'colors',
         'condition_state',
         'status',
     ];
@@ -66,6 +68,7 @@ class Product extends Model
     {
         return [
             'attributes' => 'array',
+            'colors' => 'array',
             'condition_state' => ConditionState::class,
             'status' => ProductStatus::class,
         ];

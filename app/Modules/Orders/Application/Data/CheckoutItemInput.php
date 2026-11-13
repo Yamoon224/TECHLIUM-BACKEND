@@ -9,5 +9,7 @@ final readonly class CheckoutItemInput
     public function __construct(
         public int $offerId,
         public int $quantity,
+        /** Name of the colour picked, as listed on the product; null when none. */
+        public ?string $color = null,
     ) {}
 }

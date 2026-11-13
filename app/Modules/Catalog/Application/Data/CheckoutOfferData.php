@@ -22,6 +22,8 @@ final readonly class CheckoutOfferData
         public Currency $currency,
         public int $stockQuantity,
         public ?int $vendorId = null,
+        /** @var list<array{name: string, hex: string}> */
+        public array $colors = [],
     ) {}
 
     public function price(): Money

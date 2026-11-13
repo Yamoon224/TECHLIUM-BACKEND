@@ -21,6 +21,7 @@ class PlaceOrderRequest extends FormRequest
         return [
             'items' => ['required', 'array', 'min:1'],
             'items.*.offer_id' => ['required', 'integer', 'min:1'],
+            'items.*.color' => ['nullable', 'string', 'max:40'],
             'items.*.quantity' => ['required', 'integer', 'min:1', 'max:99'],
             'customer_name' => ['required', 'string', 'max:255'],
             'customer_phone' => ['required', 'string', 'max:30'],

@@ -75,6 +75,7 @@ class ProductAdminController extends Controller
                 'description' => $request->string('description')->toString() ?: null,
                 'name_en' => $request->string('name_en')->toString() ?: null,
                 'description_en' => $request->string('description_en')->toString() ?: null,
+                'colors' => $this->colors($request->input('colors')) ?: null,
                 'condition_state' => $request->string('condition_state')->toString() ?: 'neuf',
                 'status' => 'published',
             ]);
@@ -186,6 +187,10 @@ class ProductAdminController extends Controller
     {
         $product->fill($request->only(['category_id', 'brand', 'name', 'name_en', 'description', 'description_en', 'condition_state', 'status']));
 
+        if ($request->has('colors')) {
+            $product->colors = $this->colors($request->input('colors')) ?: null;
+        }
+
         if ($request->filled('slug')) {
             $product->slug = $this->resolveSlug($request->string('slug')->toString(), $product->name);
         }
@@ -222,6 +227,21 @@ class ProductAdminController extends Controller
         $product->load(['variants.offers', 'images']);
 
         return new ProductResource($product);
+    }
+
+    /**
+     * @return list<array{name: string, hex: string}>
+     */
+    private function colors(mixed $input): array
+    {
+        if (! is_array($input)) {
+            return [];
+        }
+
+        return collect($input)
+            ->map(fn (array $color): array => ['name' => trim((string) $color['name']), 'hex' => strtolower((string) $color['hex'])])
+            ->values()
+            ->all();
     }
 
     private function resolveSlug(string $requested, string $name): string

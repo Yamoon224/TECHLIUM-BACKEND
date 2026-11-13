@@ -13,6 +13,11 @@ final class OfferUnavailableException extends DomainException
         return new self("L'offre #{$offerId} n'est plus disponible.");
     }
 
+    public static function colorUnavailable(int $offerId, string $color): self
+    {
+        return new self("La couleur « {$color} » n'est plus proposée pour l'offre #{$offerId}.");
+    }
+
     public static function insufficientStock(int $offerId): self
     {
         return new self("Stock insuffisant pour l'offre #{$offerId}.");

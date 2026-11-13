@@ -56,7 +56,7 @@ class OrderController extends Controller
     public function store(PlaceOrderRequest $request): JsonResponse
     {
         $items = array_map(
-            fn (array $line) => new CheckoutItemInput((int) $line['offer_id'], (int) $line['quantity']),
+            fn (array $line) => new CheckoutItemInput((int) $line['offer_id'], (int) $line['quantity'], isset($line['color']) ? (string) $line['color'] : null),
             $request->array('items'),
         );
 

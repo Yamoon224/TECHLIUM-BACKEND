@@ -32,6 +32,7 @@ final class EloquentCheckoutGateway implements CheckoutGatewayInterface
             currency: Currency::from($offer->currency),
             stockQuantity: $offer->stock_quantity,
             vendorId: $offer->vendor_id,
+            colors: $offer->variant->product->colors ?? [],
         );
     }
 

@@ -47,6 +47,7 @@ class OrderResource extends JsonResource
                 'items' => $subOrder->relationLoaded('items') ? $subOrder->items->map(fn ($item) => [
                     'product_name' => $item->product_name,
                     'brand' => $item->brand,
+                    'color_name' => $item->color_name,
                     'quantity' => $item->quantity,
                 ])->all() : null,
                 'status_history' => $subOrder->relationLoaded('statusEvents') ? $subOrder->statusEvents->map(fn ($event) => [

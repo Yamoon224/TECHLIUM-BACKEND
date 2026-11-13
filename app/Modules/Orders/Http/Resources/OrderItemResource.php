@@ -22,6 +22,7 @@ class OrderItemResource extends JsonResource
             'offer_id' => $item->offer_id,
             'product_name' => $item->product_name,
             'brand' => $item->brand,
+            'color' => $item->color_name ? ['name' => $item->color_name, 'hex' => $item->color_hex] : null,
             'quantity' => $item->quantity,
             'unit_price' => ['amount' => $item->unit_price_amount, 'currency' => $item->currency],
             'line_total' => ['amount' => $item->line_total_amount, 'currency' => $item->currency],

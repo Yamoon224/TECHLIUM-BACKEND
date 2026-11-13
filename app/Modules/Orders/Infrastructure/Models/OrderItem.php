@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int|null $vendor_id
  * @property string $product_name
  * @property string $brand
+ * @property string|null $color_name
+ * @property string|null $color_hex
  * @property int $unit_price_amount
  * @property string $currency
  * @property int $quantity
@@ -36,6 +38,8 @@ class OrderItem extends Model
         'vendor_id',
         'product_name',
         'brand',
+        'color_name',
+        'color_hex',
         'unit_price_amount',
         'currency',
         'quantity',

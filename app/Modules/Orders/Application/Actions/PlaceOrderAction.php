@@ -51,11 +51,24 @@ final class PlaceOrderAction
 
             $currency ??= $offer->currency->value;
 
+            // The colour must be one the product still offers; its swatch is
+            // taken from the catalogue, never from the client.
+            $color = null;
+            if ($item->color !== null && trim($item->color) !== '') {
+                $color = collect($offer->colors)->first(fn (array $c) => mb_strtolower($c['name']) === mb_strtolower(trim($item->color)));
+
+                if ($color === null) {
+                    throw OfferUnavailableException::colorUnavailable($offer->offerId, $item->color);
+                }
+            }
+
             $lines[] = [
                 'offer_id' => $offer->offerId,
                 'vendor_id' => $offer->vendorId,
                 'product_name' => $offer->productName,
                 'brand' => $offer->brand,
+                'color_name' => $color['name'] ?? null,
+                'color_hex' => $color['hex'] ?? null,
                 'unit_price_amount' => $offer->priceAmount,
                 'currency' => $offer->currency->value,
                 'quantity' => $item->quantity,
